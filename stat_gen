@@ -1,0 +1,40 @@
+#!/usr/bin/perl
+
+#Thanks to Mike Muuss for the math ;)
+
+$num=0;
+$tsumsq=0;
+$tsum=0;
+$min=9999999;
+$max=0;
+
+$threshmul=4.0;
+
+while(<>){
+	chomp;
+	($x, $y)=split;
+	if($y ne "??"){
+	   push @dat, [ $x, $y ];
+	   $num++;
+	   $tsum+=$y;
+	   $tsumsq+=($y*$y);
+	   if($y>$max){ $max=$y; }
+	   if($y<$min){ $min=$y; }
+	}
+}
+
+$avg=$tsum / $num;
+$dev=sqrt($tsumsq / $num - $avg * $avg); 
+$thresh= $dev * $threshmul;
+
+print "Num: ", $num, "\n";
+print "Tsum: ", $tsum, "\n";
+print "Tsumsq: ", $tsumsq, "\n";
+print "Avg: ", $avg, "\n";
+print "std-dev: ", $dev, "\n";
+print "Thresh: ", $thresh, "\n";
+print "ThreshMul: ", $threshmul, "\n";
+print "Min: ", $min, "\n";
+print "Max: ", $max, "\n";
+print "Avg - Thresh: ", $avg-$thresh, "\n";
+print "Avg + Thresh: ", $avg+$thresh, "\n";
