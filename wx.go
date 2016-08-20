@@ -71,7 +71,7 @@ cat $TD_EXT | awk '{print $1, $10}' | $SPIKE_FILTER | grep -A $NSAMP $YYDATEH > 
 
 $BASE_DIR/../gen_index
 
-gnuplot -e \"TD='$TD'; TDPT='$TDPT'; TDSHT='$TDSHT'\" $OVER_DIR/weather_specs.gnuplot
+gnuplot -e "TD='$TD';TDPT='$TDPT';TDSHT='$TDSHT'" $OVER_DIR/weather_specs.gnuplot
 
 # this is kinda ghetto, but to avoid race conditions we're just going to chain this together serially for now
 /home/ghz/wx/particle/graph
