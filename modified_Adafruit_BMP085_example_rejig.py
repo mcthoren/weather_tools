@@ -7,6 +7,8 @@
 # no, i haven't ever written anything in python before.
 
 import Adafruit_BMP.BMP085 as BMP085
+import time
+import datetime
 
 pressures = []
 iter = 16       
@@ -14,6 +16,7 @@ avg = 0
 
 sensor = BMP085.BMP085(mode=BMP085.BMP085_ULTRAHIGHRES)
 
+ts = datetime.datetime.fromtimestamp(time.time()).strftime("%Y%m%d%H%M%S")
 temp = sensor.read_temperature()
 
 # ideally i wouldn't average, i would look for successive equal values,
@@ -34,4 +37,4 @@ avg = avg / iter
 # moved up a few floors
 mslp_calibration = .749
 
-print "%.2f C\t\t%.3f kPa" % (temp, ((avg / 1000.0) + mslp_calibration))
+print "%s\t%.2f C\t\t%.3f kPa" % (ts, temp, ((avg / 1000.0) + mslp_calibration))

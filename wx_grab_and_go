@@ -2,13 +2,13 @@
 # this script is run from cron
 
 OVER_DIR="/home/ghz/wx"
-DATE_STAMP=`date +%Y%m%d%H%M%S`
 
-(echo -en "$DATE_STAMP\t";\
-/home/ghz/wx/modified_Adafruit_BMP085_example_rejig.py)  >> \
-/home/ghz/wx/data/bmp0085_grab.dat.`date +%Y%m%d`
+#DATE_STAMP=`date +%Y%m%d%H%M%S`
+#(echo -en "$DATE_STAMP\t";\
 
-DATE_STAMP=`date +%Y%m%d%H%M%S`
+/home/ghz/wx/modified_Adafruit_BMP085_example_rejig.py >> /home/ghz/wx/data/bmp0085_grab.dat.`date +%Y%m%d`
+
+#DATE_STAMP=`date +%Y%m%d%H%M%S`
 
 /home/ghz/wx/HTU21DF_read.py >> /home/ghz/wx/data/htu21df_grab.dat.`date +%Y%m%d`
 
