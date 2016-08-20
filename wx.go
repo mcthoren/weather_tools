@@ -1,12 +1,9 @@
 #!/bin/bash
 # see http://slackology.net/wxnotes.html for more info
-# note that this is a linux version of a script normally run on BSD systems, so things like the date are a bit different.
-# this is part of an ongoing project to tinker together a weather station from a raspberry pi.
 
 OVER_DIR="/home/ghz/wx"
 BASE_DIR="$OVER_DIR/plots"
 LOCK=$BASE_DIR/LOCK.wx
-# AVG_FILTER=$BASE_DIR/avg_filter
 SPIKE_FILTER=$OVER_DIR/spike_filter
 NSAMP=4000
 
@@ -30,20 +27,12 @@ YDATE=`date -d "-1 day" +%Y%m%d`
 YYDATE=`date -d "-2 day" +%Y%m%d`
 YYDATEH=`date -d "-2 day" +%Y%m%d%H`
 
-# i get so much junk in the file system every reboot with linux, that we resort to this. that data is _perfect_, or skipped.
-# we start the pattern matching with 2, in the hopes that i have sth better figured out before the year 2999.
-# the history of computer science suggets i won't.
-
 # python script outputs %.2f and tabs.
 PAT="^$2([0-9]{14})\t-?[0-9]*\.[0-9]{2} C\t\t[0-9]*\.[0-9]{3} kPa$"
 
 # paste outputs a tab, the /proc file _seems_ to stick with 5 digits...
 PAT1="^$2([0-9]{14})\t-?[0-9]{5}$"
-
-# and again for the sht11. holy chrome.
-# the sht11 will display humidity over 100%, since it does it when there's a lot of fog and mist around, i'm gona run with it.
 PAT2="^2([0-9]{13})\tTemp: -?[0-9]?[0-9]\.[0-9]{2} C\tHumidity: [0-9]?[0-9]?[0-9]\.[0-9]{2} %\tDew Point: -?[0-9]?[0-9]\.[0-9]{2} C$"
-# PAT3="^2([0-9]{13})\tTemp: -?[0-9]?[0-9]\.[0-9]{2} C\tHumidity: [0-9]?[0-9]?[0-9]\.[0-9]{2} %$"
 
 TDS0="cat ../data/bmp0085_grab.dat.$YYDATE ../data/bmp0085_grab.dat.$YDATE ../data/bmp0085_grab.dat.$DATE | grep -aP \"$PAT\""
 TDS1="cat ../data/pi_temp.$YYDATE ../data/pi_temp.$YDATE ../data/pi_temp.$DATE | grep -aP \"$PAT1\""
@@ -60,7 +49,6 @@ $TD_DUMP1 | grep -A $NSAMP $YYDATEH > $TDPT || $TD_DUMP1 > $TDPT
 $TD_DUMP2 | grep -A $NSAMP $YYDATEH > $TDSHT || $TD_DUMP2 > $TDSHT
 $TD_DUMP3 | grep -A $NSAMP $YYDATEH > $TD_EXT || $TD_DUMP3 > $TD_EXT
 
-
 # broken out into individual files to assist possible future filtering (bogus values, averaging, etc)
 $TD_DUMP0 |awk '{print $1, $2}' | grep -A $NSAMP $YYDATEH > $TD.int_temp || $TD_DUMP0 |awk '{print $1, $2}' > $TD.int_temp
 $TD_DUMP0 |awk '{print $1, $4}' | grep -A $NSAMP $YYDATEH > $TD.pressure || $TD_DUMP0 |awk '{print $1, $4}' > $TD.pressure
@@ -76,8 +64,6 @@ gnuplot -e "TD='$TD';TDPT='$TDPT';TDSHT='$TDSHT'" $OVER_DIR/weather_specs.gnuplo
 # this is kinda ghetto, but to avoid race conditions we're just going to chain this together serially for now
 /home/ghz/wx/particle/graph
 
-# pipe 2 to /dev/null to try to quite noise caused by my horrible internet connection for now.
-# omg my intenet sux. add timeout
 rsync -e "ssh -q" --timeout=60 -ur $OVER_DIR/* wx@darkdata.org:/wx/test/ 2>/dev/null
 
 rm $LOCK
