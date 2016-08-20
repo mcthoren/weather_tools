@@ -1,0 +1,59 @@
+#!/bin/bash
+# this is a quick a dirty script to graph random particle data files
+# i am REALLY sorry for how bash specific this is atm, i aim to fix it soon
+# see http://slackology.net/wxnotes.html for more info
+
+(($# > 0)) || {
+	echo "usage: $0 list of (day) file(s) to graph"
+	exit 1
+}
+
+WORK_DIR=`mktemp -d` || exit 1
+
+BASE_DIR="/home/ghz/wx/particle"
+AVG_FILTER=$BASE_DIR/box_avg_filter
+AVG_F_64=$BASE_DIR/box_avg_f_64
+OF=$WORK_DIR/outfile
+
+PAT="^20([0-9]{12}) [0-9]*\.[0-9]* cpm$"
+
+for i in $@; do
+
+	cat $i |egrep -a "$PAT" > $OF.24
+	cat $i |egrep -a "$PAT" | $AVG_FILTER > $OF.24.avg
+	cat $i |egrep -a "$PAT" | $AVG_F_64 > $OF.24.avg.64
+
+
+
+	# for the lnd 712 we think the conversion factor between collected cpm data and nano grays per hours is 1000/108
+	# http://www.lndinc.com/products/348/  <--"Gamma sensitivity Co60 (cps/mr/hr)  	18"
+	# ^--or at least that's the sense we have from the above
+
+	BEZ24="\"$OF.24\" using 1:((\$2*1000/108)) title 'Bezier Smoothed Dose Rate (nGy/h)' with lines lt 1 smooth bezier"
+	CPM24="\"$OF.24\" using 1:((\$2*1000/108)) title 'Dose Rate (nGy/h)' with lines lt 2"
+	AVG_CPM24="\"$OF.24.avg\" using 1:((\$2*1000/108)) title '16 pt Running Average Dose Rate (nGy/h)' with lines linecolor rgb \"#0000d0\""
+	AVG_6424l="\"$OF.24.avg.64\" using 1:((\$2*1000/108)) title '64 pt Running Average Dose Rate (nGy/h)' with lines lt 1"
+
+	PROLOUGE="set title \"Radioactivity\";\
+		set xtics ;\
+		set y2tics ;\
+		set key outside below;\
+		set xlabel \"Time (UTC)\" offset 0.0, -1.0;\
+		set xdata time;\
+		set format x \"%m/%d\\n%H:%M\";\
+		set timefmt \"%Y%m%d%H%M%S\";\
+		set grid;\
+		set ylabel \"nGy/h\";\
+		set y2label \"nGy/h\";\
+		set term png size 2000, 512 font \",10\" ;"
+
+	echo "$PROLOUGE\
+		set title \"Radioactivity over the last ~24 hours.\";\
+		set xtics 3600 ;\
+		set output 'particle_24.`basename $i`.png';\
+		plot $CPM24, $AVG_CPM24, $BEZ24;\
+		set output 'particle_24_avg.`basename $i`.png';\
+		plot $AVG_CPM24, $AVG_6424l;\
+		" |gnuplot
+
+done

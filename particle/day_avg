@@ -1,0 +1,16 @@
+#!/usr/bin/perl
+
+$num=0;
+$tsum=0;
+
+while(<>){
+	chomp;
+	($x, $y)=split;
+	if($y ne "??"){
+	   $num++;
+	   $tsum+=$y;
+	}
+}
+
+$avg=$tsum / $num;
+printf "%.2f\n", $avg;

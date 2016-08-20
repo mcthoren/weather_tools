@@ -1,0 +1,22 @@
+#!/usr/bin/perl
+
+$i = 0;
+$numpts = 16;
+$mid = $numpts / 2;
+
+while(<>){
+	chomp;
+	($x, $y) = split;
+	if($y ne "??"){
+	   push @dat, [ $x, $y ];
+	   $i++;
+	}
+}
+
+for($j = $numpts; $j < $i; $j++){
+    $sum = 0;
+    for($k = $j - $numpts; $k < $j; $k++){
+	$sum += $dat[$k][1];
+    }
+   printf "%d %.2f\n", $dat[$j - $mid][0], $sum / $numpts;
+}

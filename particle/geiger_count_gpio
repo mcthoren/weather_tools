@@ -1,0 +1,36 @@
+#!/usr/bin/python -u
+
+import RPi.GPIO as GPIO
+import time
+import datetime
+
+count = 0
+
+time0 = time.time()
+time1 = time.time()
+
+GPIO.setmode(GPIO.BCM)
+
+GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
+def my_callback(channel):
+	global count, time0, time1
+
+	time1 = time.time()
+	count += 1
+	time2 = time1 - time0
+
+	if(time2 > 60):
+		ts =  datetime.datetime.fromtimestamp(time1).strftime("%Y%m%d%H%M%S")
+		print "%s %.2f cpm" % (ts, count/(60/time2))
+		count = 0
+		time0 = time.time()
+
+GPIO.add_event_detect(17, GPIO.FALLING, callback=my_callback, bouncetime=20)
+
+try:
+	while True:
+		time.sleep(1)
+
+except KeyboardInterrupt:
+	GPIO.cleanup()   # clean up on ctrl c.

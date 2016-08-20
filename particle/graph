@@ -1,0 +1,151 @@
+#!/bin/sh
+# see http://slackology.net/wxnotes.html for more info
+
+TD="data"
+BASE_DIR="/home/ghz/wx/particle"
+DATA_DIR="$BASE_DIR/data"
+PLOT_DIR="$BASE_DIR/plots"
+LOCK="$BASE_DIR/LOCK.particle"
+AVG_FILTER=$BASE_DIR/box_avg_filter
+AVG_F_64=$BASE_DIR/box_avg_f_64
+DAY_AVG=$BASE_DIR/day_avg
+NSAMP=4000
+OF="$DATA_DIR/$TD"
+DA_OF="$DATA_DIR/data.day_avg"
+MA_OF="$DATA_DIR/data.month_avg"
+
+#from cronjob
+FLAG="$BASE_DIR/CRONFLAG"
+FLAG_MO="$BASE_DIR/CRONFLAG_MO"
+
+cd $BASE_DIR || exit 1
+
+[ -e $LOCK ] && {
+	echo "oh lock noes"
+	exit 1
+}
+
+touch $LOCK
+
+DY=`date +%Y`
+DATE=`date +%Y%m%d`
+DATE8H=`date -d "-8 hours" +%Y%m%d%H`
+YDATE=`date -d "-1 day" +%Y%m%d`
+YYDATE=`date -d "-2 day" +%Y%m%d`
+YDATEH=`date -d "-1 day" +%Y%m%d%H`
+YMDATE=`date -d "-1 month" +%Y%m`
+
+PAT="^$DY([0-9]{10}) [0-9]*\.[0-9]* cpm$"
+PAT1="^$YMDATE([0-9]{8}) [0-9]*\.[0-9]* cpm$"
+
+TDS0="cat $DATA_DIR/data.$YYDATE $DATA_DIR/data.$YDATE $DATA_DIR/data.$DATE | egrep -a \"$PAT\""
+TDS1="cat $DATA_DIR/data.$YDATE $DATA_DIR/data.$DATE | egrep -a \"$PAT\""
+TDS3="cat $DATA_DIR/data.$YMDATE* | egrep -a \"$PAT1\""
+
+TD_DUMP0="eval $TDS0"
+TD_DUMP1="eval $TDS1"
+TD_DUMP3="eval $TDS3"
+
+if [ -e $FLAG ]; then
+	(echo "$YDATE"; cat $DATA_DIR/data.$YDATE |$DAY_AVG) | paste - - >> $DA_OF
+	rm $FLAG
+fi
+	
+if [ -e $FLAG_MO ]; then
+	(echo "$YMDATE"; $TD_DUMP3 |$DAY_AVG) | paste - - >> $MA_OF
+	rm $FLAG_MO
+fi
+	
+$TD_DUMP0 | grep -A $NSAMP $YDATEH > $OF.24 || $TD_DUMP0 > $OF.24
+
+$TD_DUMP0 | $AVG_FILTER | grep -A $NSAMP $YDATEH > $OF.24.avg || $TD_DUMP0 | $AVG_FILTER > $OF.24.avg
+$TD_DUMP0 | $AVG_F_64 | grep -A $NSAMP $YDATEH > $OF.24.avg.64 || $TD_DUMP0 | $AVG_F_64 > $OF.24.avg.64
+
+$TD_DUMP1 | grep -A $NSAMP $DATE8H > $OF.8 || $TD_DUMP1 > $OF.8
+
+$TD_DUMP1 | $AVG_FILTER | grep -A $NSAMP $DATE8H > $OF.8.avg || $TD_DUMP1 | $AVG_FILTER > $OF.8.avg
+$TD_DUMP1 | $AVG_F_64 | grep -A $NSAMP $DATE8H > $OF.8.avg.64 || $TD_DUMP1 | $AVG_F_64 > $OF.8.avg.64
+
+cat $DA_OF |tail -n 45 > $DA_OF.45
+
+# for the lnd 712 we think the conversion factor between collected cpm data and nano grays per hours is 1000/108
+# http://www.lndinc.com/products/348/  <--"Gamma sensitivity Co60 (cps/mr/hr)  	18"
+# ^--or at least that's the sense we have from the above
+
+CPM8="\"$OF.8\" using 1:((\$2*1000/108)) title 'Dose Rate (nGy/h)' with lines lt 2"
+AVG_CPM8="\"$OF.8.avg\" using 1:((\$2*1000/108)) title '16 pt Running Average Dose Rate (nGy/h)' with lines linecolor rgb \"#0000d0\""
+AVG_648="\"$OF.8.avg.64\" using 1:((\$2*1000/108)) title '64 pt Running Average Dose Rate (nGy/h)' with points lt 1"
+AVG_648l="\"$OF.8.avg.64\" using 1:((\$2*1000/108)) title '64 pt Running Average Dose Rate (nGy/h)' with lines lt 1"
+
+BEZ8="\"$OF.8\" using 1:((\$2*1000/108)) title 'Bezier Smoothed Dose Rate (nGy/h)' with lines lt 1 smooth bezier"
+BEZ24="\"$OF.24\" using 1:((\$2*1000/108)) title 'Bezier Smoothed Dose Rate (nGy/h)' with lines lt 1 smooth bezier"
+
+CPM24="\"$OF.24\" using 1:((\$2*1000/108)) title 'Dose Rate (nGy/h)' with lines lt 2"
+AVG_CPM24="\"$OF.24.avg\" using 1:((\$2*1000/108)) title '16 pt Running Average Dose Rate (nGy/h)' with lines linecolor rgb \"#0000d0\""
+AVG_6424="\"$OF.24.avg.64\" using 1:((\$2*1000/108)) title '64 pt Running Average Dose Rate (nGy/h)' with points lt 1"
+AVG_6424l="\"$OF.24.avg.64\" using 1:((\$2*1000/108)) title '64 pt Running Average Dose Rate (nGy/h)' with lines lt 1"
+
+DA_BAR="\"$DA_OF\" using 1:((\$2*1000/108)) title 'Daily Average Dose Rates (nGy/h)' with histep lt 3"
+DA_BAR_45="\"$DA_OF.45\" using 1:((\$2*1000/108)) title 'Daily Average Dose Rates (nGy/h)' with boxes lt 1"
+MA_BAR="\"$MA_OF\" using 1:((\$2*1000/108)) title 'Monthly Average Dose Rates (nGy/h)' with boxes lt 1"
+
+$BASE_DIR/gen_index
+
+PROLOUGE="set title \"Radioactivity\";\
+	set xtics ;\
+	set y2tics ;\
+	set key outside below;\
+	set xlabel \"Time (UTC)\" offset 0.0, -1.0;\
+	set xdata time;\
+	set format x \"%m/%d\\\n%H:%M\";\
+	set timefmt \"%Y%m%d%H%M%S\";\
+	set grid;\
+	set ylabel \"nGy/h\";\
+	set y2label \"nGy/h\";\
+	set term png size 2000, 512 font \",10\" ;"
+
+
+echo "$PROLOUGE\
+	set title \"Radioactivity over the last ~8 hours.\";\
+	set xtics 3600 ;\
+	set output '$PLOT_DIR/particle_cpm_8.png';\
+	plot $CPM8, $AVG_CPM8, $AVG_648l;\
+	set output '$PLOT_DIR/particle_cpm_8_avg.png';\
+	plot $AVG_CPM8, $AVG_648l;\
+	" |gnuplot
+
+#	plot $CPM24, $AVG_CPM24, $AVG_6424;\
+echo "$PROLOUGE\
+	set title \"Radioactivity over the last ~24 hours.\";\
+	set xtics 3600 ;\
+	set output '$PLOT_DIR/particle_cpm_24.png';\
+	plot $CPM24, $AVG_CPM24, $BEZ24;\
+	set output '$PLOT_DIR/particle_cpm_24_avg.png';\
+	plot $AVG_CPM24, $AVG_6424l;\
+	" |gnuplot
+
+echo "$PROLOUGE\
+	set title \"Radioactivity: Daily averages.\";\
+	set xlabel \"Date (yyyy/mm, UTC)\" offset 0.0, -1.0;\
+	set format x \"%Y\/%m\" ;\
+	set output '$PLOT_DIR/particle_cpm_DA.png';\
+	set mxtics 2 ;\
+	set grid mxtics;\
+	plot $DA_BAR;\
+	set output '$PLOT_DIR/particle_cpm_MA.png';\
+	set timefmt \"%Y%m\";\
+	set title \"Radioactivity: Monthly averages.\";\
+	plot $MA_BAR;\
+	set title \"Radioactivity: Daily averages.\";\
+	set timefmt \"%Y%m%d%H%M%S\";\
+	set grid nomxtics;\
+	set xtics 172800 ;\
+	set mxtics 2 ;\
+	set title \"Radioactivity: Daily averages for the last 45 days.\";\
+	set xlabel \"Date (mm/dd, UTC)\" offset 0.0, -1.0;\
+	set format x \"%m\/%d\" ;\
+	set output '$PLOT_DIR/particle_cpm_DA.45.png';\
+	plot $DA_BAR_45;\
+	" |gnuplot
+
+rm $LOCK
