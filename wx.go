@@ -71,65 +71,13 @@ cat $TD_EXT | awk '{print $1, $10}' | $SPIKE_FILTER | grep -A $NSAMP $YYDATEH > 
 
 $BASE_DIR/../gen_index
 
-PRESSURE="\"$TD.pressure\" using 1:2 title 'Pressure (kPa)' with lines linecolor rgb \"#A020F0\""
-INT_TEMP="\"$TD.int_temp\" using 1:2 title 'Int Temp 0 (C)' with lines lt 1 smooth bezier"
-INT_TEMP_SHT="\"$TDSHT\" using 1:3 title 'Int Temp 1 (C)' with lines linecolor rgb \"#FF00FF\""
-INT_HUM_SHT="\"$TDSHT\" using 1:6 title 'Int Humidity (%)' with lines linecolor rgb \"#0000C0\" smooth bezier"
-INT_DP_SHT="\"$TDSHT\" using 1:10 title 'Int Dew Point (C)' with lines linecolor rgb \"#0000FF\""
-EXT_TEMP="\"$TD.ext_temp\" using 1:2 title 'Ext Temp (C)' with lines linecolor rgb \"#00DD00\""
-EXT_HUM="\"$TD.ext_hum\" using 1:2 title 'Ext Humidity (%)' with lines linecolor rgb \"#00DDDD\" smooth bezier"
-EXT_DP="\"$TD.ext_dp\" using 1:2 title 'Ext Dew Point (C)' with lines linecolor rgb \"#000FFF\""
-PI_TEMP="\"$TDPT\" using 1:((\$2/1000)) title 'Pi Temp (C)' with lines lt 2 smooth bezier"
+gnuplot -e \"TD='$TD'; TDPT='$TDPT'; TDSHT='$TDSHT'\" $OVER_DIR/weather_specs.gnuplot
 
-PROLOUGE="set title \"Weather Data for the Last ~48 Hours\";\
-	set xtics 7200 ;\
-	set y2tics ;\
-	set key outside below;\
-	set xlabel \"Time (UTC)\" offset 0.0, -1.0;\
-	set xdata time;\
-	set format x \"%m/%d\\n%H:%M\";\
-	set timefmt \"%Y%m%d%H%M%S\";\
-	set grid;\
-	set term png size 2000, 512 font \",10\";"
+# this is kinda ghetto, but to avoid race conditions we're just going to chain this together serially for now
+/home/ghz/wx/particle/graph
 
-echo "$PROLOUGE\
-	set ylabel \"kPa\";\
-	set y2label \"kPa\";\
-	set output 'pressure.png';\
-	set format y \"%.2f\" ;\
-	set format y2 \"%.2f\" ;\
-	plot $PRESSURE;\
-	" |gnuplot
-
-echo "$PROLOUGE\
-	set ylabel \"Deg (C)\";\
-	set y2label \"Deg (C)\";\
-	set output 'inttemp.png';\
-	plot $INT_TEMP, $INT_TEMP_SHT;\
-	set output 'pitemp.png';\
-	plot $PI_TEMP;\
-	set output 'exttemp.png';\
-	plot $EXT_TEMP, $EXT_DP;\
-	" |gnuplot
-
-#	set output 'exttemp.png';\
-#	plot $EXT_TEMP;\
-#	" |gnuplot
-
-echo "$PROLOUGE\
-	set ylabel \"Humidity (%)\";\
-	set y2label \"Humidity (%)\";\
-	set output 'inthumsht.png';\
-	plot $INT_HUM_SHT;\
-	set output 'exthum.png';\
-	plot $EXT_HUM;\
-	" |gnuplot
-
-	# this is kinda ghetto, but to avoid race conditions we're just going to chain this together serially for now
-	/home/ghz/wx/particle/graph
-
-	# pipe 2 to /dev/null to try to quite noise caused by my horrible internet connection for now.
-	# omg my intenet sux. add timeout
-	rsync -e "ssh -q" --timeout=60 -ur $OVER_DIR/* wx@darkdata.org:/wx/test/ 2>/dev/null
+# pipe 2 to /dev/null to try to quite noise caused by my horrible internet connection for now.
+# omg my intenet sux. add timeout
+rsync -e "ssh -q" --timeout=60 -ur $OVER_DIR/* wx@darkdata.org:/wx/test/ 2>/dev/null
 
 rm $LOCK
