@@ -1,5 +1,6 @@
 #!/bin/bash
-# see http://slackology.net/wxnotes.html for more info
+# see http://slackology.net/wxnotes.html and
+# https://github.com/mcthoren/weather_tools for more info
 
 OVER_DIR="/home/ghz/wx"
 BASE_DIR="$OVER_DIR/plots"
