@@ -1,6 +1,7 @@
 #!/bin/bash
 # this script is run from cron
 
+OVER_DIR="/home/ghz/wx"
 DATE_STAMP=`date +%Y%m%d%H%M%S`
 
 (echo -en "$DATE_STAMP\t";\
@@ -9,7 +10,9 @@ DATE_STAMP=`date +%Y%m%d%H%M%S`
 
 DATE_STAMP=`date +%Y%m%d%H%M%S`
 
-# (echo -en "$DATE_STAMP\t";\
 /home/ghz/wx/HTU21DF_read.py >> /home/ghz/wx/data/htu21df_grab.dat.`date +%Y%m%d`
 
 /home/ghz/wx/wx.go
+/home/ghz/wx/particle/graph
+
+rsync -e "ssh -q" --timeout=60 -ur $OVER_DIR/* wx@darkdata.org:/wx/test/ 2>/dev/null

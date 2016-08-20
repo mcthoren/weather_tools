@@ -62,9 +62,4 @@ $BASE_DIR/../gen_index
 
 gnuplot -e "TD='$TD';TDPT='$TDPT';TDSHT='$TDSHT'" $OVER_DIR/weather_specs.gnuplot
 
-# this is kinda ghetto, but to avoid race conditions we're just going to chain this together serially for now
-/home/ghz/wx/particle/graph
-
-rsync -e "ssh -q" --timeout=60 -ur $OVER_DIR/* wx@darkdata.org:/wx/test/ 2>/dev/null
-
 rm $LOCK
