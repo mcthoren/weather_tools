@@ -3,16 +3,10 @@
 
 OVER_DIR="/home/ghz/wx"
 
-#DATE_STAMP=`date +%Y%m%d%H%M%S`
-#(echo -en "$DATE_STAMP\t";\
+$OVER_DIR/modified_Adafruit_BMP085_example_rejig.py >> $OVER_DIR/data/bmp0085_grab.dat.`date +%Y%m%d`
+$OVER_DIR/HTU21DF_read.py >> $OVER_DIR/data/htu21df_grab.dat.`date +%Y%m%d`
 
-/home/ghz/wx/modified_Adafruit_BMP085_example_rejig.py >> /home/ghz/wx/data/bmp0085_grab.dat.`date +%Y%m%d`
-
-#DATE_STAMP=`date +%Y%m%d%H%M%S`
-
-/home/ghz/wx/HTU21DF_read.py >> /home/ghz/wx/data/htu21df_grab.dat.`date +%Y%m%d`
-
-/home/ghz/wx/wx.go
-/home/ghz/wx/particle/graph
+$OVER_DIR/wx.go
+$OVER_DIR/particle/graph
 
 rsync -e "ssh -q" --timeout=60 -ur $OVER_DIR/* wx@darkdata.org:/wx/test/ 2>/dev/null
