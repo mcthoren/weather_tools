@@ -48,7 +48,7 @@ def htu21df_read():
 
 	print "%s\tTemp: %.2f C\tHumidity: %.2f %%\tDew Point: %.2f C" % (ts, temp, hum, T_dew)
 
-def bmp085_read()
+def bmp085_read():
 	# https://www.adafruit.com/products/391
 	import Adafruit_BMP.BMP085 as BMP085
 
@@ -78,4 +78,4 @@ def bmp085_read()
 
 if __name__ == "__main__":
 	bmp085_read()
-	htu21d_read()
+	htu21df_read()
