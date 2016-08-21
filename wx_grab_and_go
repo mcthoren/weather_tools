@@ -3,8 +3,7 @@
 
 OVER_DIR="/home/ghz/wx"
 
-$OVER_DIR/modified_Adafruit_BMP085_example_rejig.py >> $OVER_DIR/data/bmp0085_grab.dat.`date +%Y%m%d`
-$OVER_DIR/HTU21DF_read.py >> $OVER_DIR/data/htu21df_grab.dat.`date +%Y%m%d`
+$OVER_DIR/sensor_data_grab.py
 
 $OVER_DIR/wx.go
 $OVER_DIR/particle/graph

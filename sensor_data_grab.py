@@ -8,6 +8,8 @@
 import time
 import datetime
 
+wx_dir = "/home/ghz/wx"
+
 def htu21df_read():
 	# https://www.adafruit.com/product/1899
 	
@@ -34,6 +36,7 @@ def htu21df_read():
 	time.sleep(0.2)
 
 	ts =  datetime.datetime.fromtimestamp(time.time()).strftime("%Y%m%d%H%M%S")
+	f_ts =  datetime.datetime.fromtimestamp(time.time()).strftime("%Y%m%d")
 
 	array = dev0.readList(temp_read, 2)
 	t0 = (array[0] * 256.0) + array[1]
@@ -46,6 +49,13 @@ def htu21df_read():
 	P_part = 10 ** (const_a - (const_b / (temp + const_c)))
 	T_dew = -1 * ((const_b / (math.log10(hum * (P_part / 100)) - const_a)) + const_c)
 
+	dat_string = "%s\tTemp: %.2f C\tHumidity: %.2f %%\tDew Point: %.2f C\n" % (ts, temp, hum, T_dew)
+
+	out_file_n = wx_dir+'/data/htu21df_grab.dat.'+f_ts
+	out_file_fd = open(out_file_n, 'a')
+	out_file_fd.write(dat_string)
+	out_file_fd.close()
+	
 	print "%s\tTemp: %.2f C\tHumidity: %.2f %%\tDew Point: %.2f C" % (ts, temp, hum, T_dew)
 
 def bmp085_read():
@@ -59,6 +69,8 @@ def bmp085_read():
 	sensor = BMP085.BMP085(mode=BMP085.BMP085_ULTRAHIGHRES)
 
 	ts = datetime.datetime.fromtimestamp(time.time()).strftime("%Y%m%d%H%M%S")
+	f_ts =  datetime.datetime.fromtimestamp(time.time()).strftime("%Y%m%d")
+
 	temp = sensor.read_temperature()
 
 	# datasheet suggests averaging
@@ -71,8 +83,15 @@ def bmp085_read():
 	# means sea level pressure calibration
 	# calibrated against:
 	# http://www.geomar.de/service/wetter/
-	# kPa
+	# [kPa]
 	mslp_calibration = .749
+
+	dat_string = "%s\t%.2f C\t\t%.3f kPa\n" % (ts, temp, ((avg / 1000.0) + mslp_calibration))
+
+	out_file_n = wx_dir+'/data/bmp0085_grab.dat.'+f_ts
+	out_file_fd = open(out_file_n, 'a')
+	out_file_fd.write(dat_string)
+	out_file_fd.close()
 
 	print "%s\t%.2f C\t\t%.3f kPa" % (ts, temp, ((avg / 1000.0) + mslp_calibration))
 
