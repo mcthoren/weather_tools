@@ -16,6 +16,9 @@ set format y "%.2f"
 set format y2 "%.2f"
 plot TD.".pressure" using 1:2 title 'Pressure (kPa)' with lines linecolor rgb "#A020F0"
 
+set format y
+set format y2
+
 set ylabel "Deg (C)"
 set y2label "Deg (C)"
 set output 'inttemp.png'
