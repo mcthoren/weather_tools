@@ -95,6 +95,33 @@ def bmp085_read():
 
 	# print "%s\t%.2f C\t\t%.3f kPa" % (ts, temp, ((avg / 1000.0) + mslp_calibration))
 
+def sht11_read():
+	# basically the sample code from the docs:
+	# https://pypi.python.org/pypi/rpiSht1x/1.2
+
+	from sht1x.Sht1x import Sht1x as SHT1x
+	dataPin = 16
+	clkPin = 7
+
+	sht1x = SHT1x(dataPin, clkPin, SHT1x.GPIO_BOARD)
+
+	ts = datetime.datetime.fromtimestamp(time.time()).strftime("%Y%m%d%H%M%S")
+	f_ts =  datetime.datetime.fromtimestamp(time.time()).strftime("%Y%m%d")
+
+	temperature = sht1x.read_temperature_C()
+	humidity = sht1x.read_humidity()
+	dp = sht1x.calculate_dew_point(temperature, humidity)
+
+	dat_string = "%s\tTemp: %.2f C\tHumidity: %.2f %%\tDew Point: %.2f C\n" % (ts, temperature, humidity, dp)
+
+	out_file_n = wx_dir+'/data/sht11_grab.dat.'+f_ts
+	out_file_fd = open(out_file_n, 'a')
+	out_file_fd.write(dat_string)
+	out_file_fd.close()
+
+	# print "Temp: %.2f C\tHumidity: %.2f %%\tDew Point: %.2f C" % (temperature, humidity, dp)
+
 if __name__ == "__main__":
 	bmp085_read()
 	htu21df_read()
+	sht11_read()
