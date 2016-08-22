@@ -56,7 +56,7 @@ def htu21df_read():
 	out_file_fd.write(dat_string)
 	out_file_fd.close()
 	
-	print "%s\tTemp: %.2f C\tHumidity: %.2f %%\tDew Point: %.2f C" % (ts, temp, hum, T_dew)
+	# print "%s\tTemp: %.2f C\tHumidity: %.2f %%\tDew Point: %.2f C" % (ts, temp, hum, T_dew)
 
 def bmp085_read():
 	# https://www.adafruit.com/products/391
@@ -93,7 +93,7 @@ def bmp085_read():
 	out_file_fd.write(dat_string)
 	out_file_fd.close()
 
-	print "%s\t%.2f C\t\t%.3f kPa" % (ts, temp, ((avg / 1000.0) + mslp_calibration))
+	# print "%s\t%.2f C\t\t%.3f kPa" % (ts, temp, ((avg / 1000.0) + mslp_calibration))
 
 if __name__ == "__main__":
 	bmp085_read()
