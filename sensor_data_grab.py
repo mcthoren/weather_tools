@@ -121,6 +121,23 @@ def sht11_read():
 
 	# print "Temp: %.2f C\tHumidity: %.2f %%\tDew Point: %.2f C" % (temperature, humidity, dp)
 
+def pi_temp_read():
+	temp_file = "/sys/class/thermal/thermal_zone0/temp"
+	temp_file_fd = open(temp_file, 'r')
+
+	ts = datetime.datetime.fromtimestamp(time.time()).strftime("%Y%m%d%H%M%S")
+	f_ts =  datetime.datetime.fromtimestamp(time.time()).strftime("%Y%m%d")
+
+	temp_data = temp_file_fd.read()
+	temp_file_fd.close()
+
+	dat_string = "%s\t%s\n"
+
+	out_file_n = wx_dir+'/data/pi_temp.'+f_ts
+	out_file_fd = open(out_file_n, 'a')
+	out_file_fd.write(dat_string)
+	out_file_fd.close()
+
 if __name__ == "__main__":
 	bmp085_read()
 	htu21df_read()
