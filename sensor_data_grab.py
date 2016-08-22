@@ -97,7 +97,7 @@ def bmp085_read():
 
 	# print "%s\t%.2f C\t\t%.3f kPa" % (ts, temp, ((avg / 1000.0) + mslp_calibration))
 
-	return (btemp, (avg / 1000.0) + mslp_calibration)
+	return (temp, (avg / 1000.0) + mslp_calibration)
 
 def sht11_read():
 	# basically the sample code from the docs:
@@ -125,7 +125,7 @@ def sht11_read():
 
 	# print "Temp: %.2f C\tHumidity: %.2f %%\tDew Point: %.2f C" % (temperature, humidity, dp)
 
-	 return (temperature, humidity, dp)
+	return (temperature, humidity, dp)
 
 def pi_temp_read():
 	temp_file = "/sys/class/thermal/thermal_zone0/temp"
