@@ -131,7 +131,7 @@ def pi_temp_read():
 	temp_data = temp_file_fd.read()
 	temp_file_fd.close()
 
-	dat_string = "%s\t%s\n"
+	dat_string = "%s\t%s" % (ts, temp_data)
 
 	out_file_n = wx_dir+'/data/pi_temp.'+f_ts
 	out_file_fd = open(out_file_n, 'a')
@@ -142,3 +142,4 @@ if __name__ == "__main__":
 	bmp085_read()
 	htu21df_read()
 	sht11_read()
+	pi_temp_read()
