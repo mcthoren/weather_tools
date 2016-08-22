@@ -1,8 +1,0 @@
-#!/bin/bash
-# this script is run from ROOT cron,
-# because i don't know how to do gpio access on an rpi w.o. root :( 
-
-DATE_STAMP=`date +%Y%m%d%H%M%S`
-DATA_DIR="/home/ghz/wx/data"
-
-(echo "$DATE_STAMP"; /home/ghz/wx/modified_rpiSht1x_example.py) |paste - - >>  $DATA_DIR/sht11_grab.dat.`date +%Y%m%d`
