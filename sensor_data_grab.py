@@ -58,6 +58,8 @@ def htu21df_read():
 	
 	# print "%s\tTemp: %.2f C\tHumidity: %.2f %%\tDew Point: %.2f C" % (ts, temp, hum, T_dew)
 
+	return (temp, hum, T_dew)
+
 def bmp085_read():
 	# https://www.adafruit.com/products/391
 	import Adafruit_BMP.BMP085 as BMP085
@@ -95,6 +97,8 @@ def bmp085_read():
 
 	# print "%s\t%.2f C\t\t%.3f kPa" % (ts, temp, ((avg / 1000.0) + mslp_calibration))
 
+	return (btemp, (avg / 1000.0) + mslp_calibration)
+
 def sht11_read():
 	# basically the sample code from the docs:
 	# https://pypi.python.org/pypi/rpiSht1x/1.2
@@ -121,6 +125,8 @@ def sht11_read():
 
 	# print "Temp: %.2f C\tHumidity: %.2f %%\tDew Point: %.2f C" % (temperature, humidity, dp)
 
+	 return (temperature, humidity, dp)
+
 def pi_temp_read():
 	temp_file = "/sys/class/thermal/thermal_zone0/temp"
 	temp_file_fd = open(temp_file, 'r')
@@ -138,8 +144,34 @@ def pi_temp_read():
 	out_file_fd.write(dat_string)
 	out_file_fd.close()
 
+	return (float(temp_data) / 1000)
+
+def gen_index(etemp, ehum, edp, press, bmptemp, itemp, ihum, idp, pitemp):
+	plate = wx_dir+"wx_index.html.template"
+	plate_fd = open(plate, 'r')
+	plate_dat = plate_fd.read()
+	plate_fd.close()
+
+	ts = datetime.datetime.fromtimestamp(time.time()).strftime("%FT%TZ")
+
+	plate_dat = plate_dat.replace("EXTTEMP", etemp)
+	plate_dat = plate_dat.replace("EXTHUM", ehum)
+	plate_dat = plate_dat.replace("EXTDP", edp)
+	plate_dat = plate_dat.replace("REL_PRESS", press)
+	plate_dat = plate_dat.replace("INTTEMP", bmptemp)
+	plate_dat = plate_dat.replace("INTTEMPSHT", itemp)
+	plate_dat = plate_dat.replace("INTHUMSHT", ihum)
+	plate_dat = plate_dat.replace("PITEMP", pitemp)
+	plate_dat = plate_dat.replace("DATE", ts)
+
+	out_file_n = wx_dir+'/plots/wx.html'
+	out_file_fd = open(out_file_n, 'w')
+	out_file_fd.write(plate_dat)
+	out_file_fd.close()
+
 if __name__ == "__main__":
-	bmp085_read()
-	htu21df_read()
-	sht11_read()
-	pi_temp_read()
+	(bmp_temp, press) = bmp085_read()
+	(e_temp, e_hum, e_dp) = htu21df_read()
+	(i_temp, i_hum, i_dp) = sht11_read()
+	pi_temp = pi_temp_read()
+	# gen_index(e_temp, e_hum, e_dp, press, bmp_temp, i_temp, i_hum, i_dp, pi_temp)
