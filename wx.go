@@ -58,8 +58,6 @@ cat $TD_EXT | awk '{print $1, $3}' | $SPIKE_FILTER | grep -A $NSAMP $YYDATEH > $
 cat $TD_EXT | awk '{print $1, $6}' | $SPIKE_FILTER | grep -A $NSAMP $YYDATEH > $TD.ext_hum || cat $TD_EXT | awk '{print $1, $6}' | $SPIKE_FILTER > $TD.ext_hum
 cat $TD_EXT | awk '{print $1, $10}' | $SPIKE_FILTER | grep -A $NSAMP $YYDATEH > $TD.ext_dp || cat $TD_EXT | awk '{print $1, $10}' | $SPIKE_FILTER > $TD.ext_dp
 
-$BASE_DIR/../gen_index
-
 gnuplot -e "TD='$TD';TDPT='$TDPT';TDSHT='$TDSHT'" $OVER_DIR/weather_specs.gnuplot
 
 rm $LOCK

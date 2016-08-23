@@ -1,8 +1,6 @@
-# OUT_FILE="$BASE_DIR/plots/wx.html"
-
-<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html> <head> <title> danger! test product! </title> </head> 
-<body  bgcolor=\"#000000\" text=\"#206cff\" link=\"#0099ff\" vlink=\"#00ffff\"> 
+<body  bgcolor="#000000" text="#206cff" link="#0099ff" vlink="#00ffff"> 
 <center>
 <br> Weather from Kiel (Northern Germany), uncalibrated, just playing with a raspberry pi and some adafruit kit.
 <br> <br>
@@ -17,12 +15,12 @@
 </table>
 
 <br>
-<img src=\"exttemp.png\"><br><br>
-<img src=\"exthum.png\"><br><br>
-<img src=\"pressure.png\"><br><br>
-<img src=\"inttemp.png\"><br><br>
-<img src=\"inthumsht.png\"><br><br>
-<img src=\"pitemp.png\"><br><br>
+<img src="exttemp.png"><br><br>
+<img src="exthum.png"><br><br>
+<img src="pressure.png"><br><br>
+<img src="inttemp.png"><br><br>
+<img src="inthumsht.png"><br><br>
+<img src="pitemp.png"><br><br>
 </center>
 <br> <br>
 </body> </html>

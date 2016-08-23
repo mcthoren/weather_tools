@@ -147,21 +147,21 @@ def pi_temp_read():
 	return (float(temp_data) / 1000)
 
 def gen_index(etemp, ehum, edp, press, bmptemp, itemp, ihum, idp, pitemp):
-	plate = wx_dir+"wx_index.html.template"
+	plate = wx_dir+"/wx_index.html.template"
 	plate_fd = open(plate, 'r')
 	plate_dat = plate_fd.read()
 	plate_fd.close()
 
 	ts = datetime.datetime.fromtimestamp(time.time()).strftime("%FT%TZ")
 
-	plate_dat = plate_dat.replace("EXTTEMP", etemp)
-	plate_dat = plate_dat.replace("EXTHUM", ehum)
-	plate_dat = plate_dat.replace("EXTDP", edp)
-	plate_dat = plate_dat.replace("REL_PRESS", press)
-	plate_dat = plate_dat.replace("INTTEMP", bmptemp)
-	plate_dat = plate_dat.replace("INTTEMPSHT", itemp)
-	plate_dat = plate_dat.replace("INTHUMSHT", ihum)
-	plate_dat = plate_dat.replace("PITEMP", pitemp)
+	plate_dat = plate_dat.replace("EXTTEMP", str("%.2f" % etemp))
+	plate_dat = plate_dat.replace("EXTHUM", str("%.2f" % ehum))
+	plate_dat = plate_dat.replace("EXTDP", str("%.2f" % edp))
+	plate_dat = plate_dat.replace("REL_PRESS", str("%.3f" % press))
+	plate_dat = plate_dat.replace("INTTEMPSHT", str("%.2f" % itemp))
+	plate_dat = plate_dat.replace("INTHUMSHT", str("%.2f" % ihum))
+	plate_dat = plate_dat.replace("INTTEMP", str("%.2f" % bmptemp))
+	plate_dat = plate_dat.replace("PITEMP", str("%.2f" % pitemp))
 	plate_dat = plate_dat.replace("DATE", ts)
 
 	out_file_n = wx_dir+'/plots/wx.html'
@@ -174,4 +174,4 @@ if __name__ == "__main__":
 	(e_temp, e_hum, e_dp) = htu21df_read()
 	(i_temp, i_hum, i_dp) = sht11_read()
 	pi_temp = pi_temp_read()
-	# gen_index(e_temp, e_hum, e_dp, press, bmp_temp, i_temp, i_hum, i_dp, pi_temp)
+	gen_index(e_temp, e_hum, e_dp, press, bmp_temp, i_temp, i_hum, i_dp, pi_temp)
