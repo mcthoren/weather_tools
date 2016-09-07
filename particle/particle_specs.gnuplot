@@ -33,7 +33,7 @@ set output 'particle_cpm_DA.png'
 set xtics auto
 set mxtics 2
 set grid mxtics
-plot DAF using 1:(($2*1000/108)) title 'Daily Average Dose Rates (nGy/h)' with boxes lt 1
+plot DAF using 1:(($2*1000/108)) title 'Daily Average Dose Rates (nGy/h)' with histeps linecolor rgb "#0088FF"
 
 set output 'particle_cpm_MA.png'
 set timefmt "%Y%m"
