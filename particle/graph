@@ -18,7 +18,8 @@ MA_OF="$DATA_DIR/data.month_avg"
 FLAG="$BASE_DIR/CRONFLAG"
 FLAG_MO="$BASE_DIR/CRONFLAG_MO"
 
-cd $BASE_DIR || exit 1
+#cd $BASE_DIR || exit 1
+cd $PLOT_DIR || exit 1
 
 [ -e $LOCK ] && {
 	echo "oh lock noes"
