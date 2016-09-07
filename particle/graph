@@ -75,6 +75,6 @@ cat $DA_OF |tail -n 45 > $DA_OF.45
 
 $BASE_DIR/gen_index
 
-gnuplot -e "OF='$OF';DA_OF='$DA_OF';MA_OF='$MA_OF'" $BASE_DIR/particle_specs.gnuplot
+gnuplot -e "OF='$OF';DAF='$DA_OF';MAF='$MA_OF'" $BASE_DIR/particle_specs.gnuplot
 
 rm $LOCK
