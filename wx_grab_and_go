@@ -2,10 +2,20 @@
 # this script is run from cron
 
 OVER_DIR="/home/ghz/wx"
+LOCK="$OVER_DIR/plots/LOCK.wx"
+
+[ -e $LOCK ] && {
+	echo "$0: lock exists" | logger
+	exit 1
+}
+
+# lock is also checked for and deleted on boot, in case of a crash
+touch $LOCK
 
 $OVER_DIR/sensor_data_grab.py
-
 $OVER_DIR/wx.go
 $OVER_DIR/particle/graph
 
 rsync -e "ssh -q" --timeout=60 -ur $OVER_DIR/* wx@darkdata.org:/wx/test/ 2>/dev/null
+
+rm $LOCK

@@ -4,7 +4,6 @@
 
 OVER_DIR="/home/ghz/wx"
 BASE_DIR="$OVER_DIR/plots"
-LOCK=$BASE_DIR/LOCK.wx
 SPIKE_FILTER=$OVER_DIR/spike_filter
 NSAMP=4000
 
@@ -13,14 +12,6 @@ TD="../data/last48h"
 TDPT="../data/last48h.pitemp"
 TDSHT="../data/last48h.sht"
 TD_EXT="../data/last48h.htu_ext"
-
-[ -e $LOCK ] && {
-	echo "$0: lock exists" | logger
-	exit 1
-}
-
-# lock is also checked for and deleted on boot, in case of a crash
-touch $LOCK
 
 DY=`date +%Y`
 DATE=`date +%Y%m%d`
@@ -59,5 +50,3 @@ cat $TD_EXT | awk '{print $1, $6}' | $SPIKE_FILTER | grep -A $NSAMP $YYDATEH > $
 cat $TD_EXT | awk '{print $1, $10}' | $SPIKE_FILTER | grep -A $NSAMP $YYDATEH > $TD.ext_dp || cat $TD_EXT | awk '{print $1, $10}' | $SPIKE_FILTER > $TD.ext_dp
 
 gnuplot -e "TD='$TD';TDPT='$TDPT';TDSHT='$TDSHT'" $OVER_DIR/weather_specs.gnuplot
-
-rm $LOCK
