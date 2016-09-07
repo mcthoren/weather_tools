@@ -51,8 +51,8 @@ $TD_DUMP2 | grep -A $NSAMP $YYDATEH > $TDSHT || $TD_DUMP2 > $TDSHT
 $TD_DUMP3 | grep -A $NSAMP $YYDATEH > $TD_EXT || $TD_DUMP3 > $TD_EXT
 
 # broken out into individual files to assist possible future filtering (bogus values, averaging, etc)
-$TD_DUMP0 |awk '{print $1, $2}' | grep -A $NSAMP $YYDATEH > $TD.int_temp || $TD_DUMP0 |awk '{print $1, $2}' > $TD.int_temp
-$TD_DUMP0 |awk '{print $1, $4}' | grep -A $NSAMP $YYDATEH > $TD.pressure || $TD_DUMP0 |awk '{print $1, $4}' > $TD.pressure
+$TD_DUMP0 |awk '{print $1, $2}' | $SPIKE_FILTER | grep -A $NSAMP $YYDATEH > $TD.int_temp || $TD_DUMP0 |awk '{print $1, $2}' | $SPIKE_FILTER > $TD.int_temp
+$TD_DUMP0 |awk '{print $1, $4}' | $SPIKE_FILTER | grep -A $NSAMP $YYDATEH > $TD.pressure || $TD_DUMP0 |awk '{print $1, $4}' | $SPIKE_FILTER > $TD.pressure
 
 cat $TD_EXT | awk '{print $1, $3}' | $SPIKE_FILTER | grep -A $NSAMP $YYDATEH > $TD.ext_temp || cat $TD_EXT | awk '{print $1, $3}' | $SPIKE_FILTER > $TD.ext_temp
 cat $TD_EXT | awk '{print $1, $6}' | $SPIKE_FILTER | grep -A $NSAMP $YYDATEH > $TD.ext_hum || cat $TD_EXT | awk '{print $1, $6}' | $SPIKE_FILTER > $TD.ext_hum
