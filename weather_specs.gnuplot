@@ -15,7 +15,7 @@ set output 'pressure.png'
 set format y "%.2f"
 set format y2 "%.2f"
 plot TD.".pressure" using 1:2 title 'Pressure (kPa)' with lines linecolor rgb "#A020F0",\
-TD.".pressure" using 1:2 title 'Pressure - smoothed (kPa)' with lines linecolor rgb "#A0A0F0" smooth bezier
+TD.".pressure" using 1:2 title 'Pressure - Bezier Smoothed (kPa)' with lines linecolor rgb "#50F0A0" smooth bezier
 
 set format y
 set format y2
@@ -24,7 +24,8 @@ set ylabel "Deg (C)"
 set y2label "Deg (C)"
 set output 'inttemp.png'
 plot TD.".int_temp" using 1:2 title 'Int Temp 0 (C)' with lines lt 1 smooth bezier,\
-TDSHT using 1:3 title 'Int Temp 1 (C)' with lines linecolor rgb "#FF00FF"
+TDSHT using 1:3 title 'Int Temp 1 (C)' with lines linecolor rgb "#FF00FF",\
+TDSHT using 1:3 title 'Int Temp 1 - Bezier Smoothed (C)' with lines linecolor rgb "#00FF40" smooth bezier
 
 set output 'pitemp.png'
 plot TDPT using 1:(($2/1000)) title 'Pi Temp (C)' with lines lt 2 smooth bezier
