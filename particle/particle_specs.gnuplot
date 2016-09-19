@@ -13,18 +13,24 @@ set term png size 2000, 512 font ",10"
 set title "Radioactivity over the last ~8 hours."
 set xtics 3600
 set output 'particle_cpm_8.png'
-plot OF.".8" using 1:(($2*1000/108)) title 'Dose Rate (nGy/h)' with lines lt 2, OF.".8.avg" using 1:(($2*1000/108)) title '16 pt Running Average Dose Rate (nGy/h)' with lines linecolor rgb "#0000d0", OF.".8.avg.64" using 1:(($2*1000/108)) title '64 pt Running Average Dose Rate (nGy/h)' with lines lt 1
+plot OF.".8" using 1:(($2*1000/108)) title 'Dose Rate (nGy/h)' with lines lt 2,\
+OF.".8.avg" using 1:(($2*1000/108)) title '16 pt Running Average Dose Rate (nGy/h)' with lines linecolor rgb "#0000d0",\
+OF.".8.avg.64" using 1:(($2*1000/108)) title '64 pt Running Average Dose Rate (nGy/h)' with lines lt 1
 
 set output 'particle_cpm_8_avg.png'
-plot OF.".8.avg" using 1:(($2*1000/108)) title '16 pt Running Average Dose Rate (nGy/h)' with lines linecolor rgb "#0000d0", OF.".8.avg.64" using 1:(($2*1000/108)) title '64 pt Running Average Dose Rate (nGy/h)' with lines lt 1
+plot OF.".8.avg" using 1:(($2*1000/108)) title '16 pt Running Average Dose Rate (nGy/h)' with lines linecolor rgb "#0000d0",\
+OF.".8.avg.64" using 1:(($2*1000/108)) title '64 pt Running Average Dose Rate (nGy/h)' with lines lt 1
 
 set title "Radioactivity over the last ~24 hours."
 set xtics 3600
 set output 'particle_cpm_24.png'
-plot OF.".24" using 1:(($2*1000/108)) title 'Dose Rate (nGy/h)' with lines lt 2, OF.".24.avg" using 1:(($2*1000/108)) title '16 pt Running Average Dose Rate (nGy/h)' with lines linecolor rgb "#0000d0", OF.".24" using 1:(($2*1000/108)) title 'Bezier Smoothed Dose Rate (nGy/h)' with lines lt 1 smooth bezier
+plot OF.".24" using 1:(($2*1000/108)) title 'Dose Rate (nGy/h)' with lines lt 2,\
+OF.".24.avg" using 1:(($2*1000/108)) title '16 pt Running Average Dose Rate (nGy/h)' with lines linecolor rgb "#0000d0",\
+OF.".24" using 1:(($2*1000/108)) title 'Bezier Smoothed Dose Rate (nGy/h)' with lines lt 1 smooth bezier
 
 set output 'particle_cpm_24_avg.png'
-plot OF.".24.avg" using 1:(($2*1000/108)) title '16 pt Running Average Dose Rate (nGy/h)' with lines linecolor rgb "#0000d0", OF.".24.avg.64" using 1:(($2*1000/108)) title '64 pt Running Average Dose Rate (nGy/h)' with lines lt 1
+plot OF.".24.avg" using 1:(($2*1000/108)) title '16 pt Running Average Dose Rate (nGy/h)' with lines linecolor rgb "#0000d0",\
+OF.".24.avg.64" using 1:(($2*1000/108)) title '64 pt Running Average Dose Rate (nGy/h)' with lines lt 1
 
 set title "Radioactivity: Daily averages."
 set xlabel "Date (yyyy/mm, UTC)" offset 0.0, -1.0
