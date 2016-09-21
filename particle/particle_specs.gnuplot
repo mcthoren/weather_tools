@@ -10,9 +10,11 @@ set ylabel "nGy/h"
 set y2label "nGy/h"
 set term png size 2000, 512 font ",10"
 
-# for the lnd 712 we think the conversion factor between collected cpm data and nano grays per hours is 1000/108
+# for the lnd 712 we think the conversion factor between collected cpm data and nano grays per hours is 1000/108 for Co60.
 # http://www.lndinc.com/products/348/  <--"Gamma sensitivity Co60 (cps/mr/hr)   18"
 # ^--or at least that's the sense we have from the above
+# which is likely going to yield a much higher dose rate than what we're actually seeing, as Co60 is prly
+# not the typical isotope that we measure here in my apt.
 
 set title "Radioactivity over the last ~8 hours."
 set xtics 3600
