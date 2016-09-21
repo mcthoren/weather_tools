@@ -69,10 +69,6 @@ $TD_DUMP1 | $AVG_F_64 | grep -A $NSAMP $DATE8H > $OF.8.avg.64 || $TD_DUMP1 | $AV
 
 cat $DA_OF |tail -n 45 > $DA_OF.45
 
-# for the lnd 712 we think the conversion factor between collected cpm data and nano grays per hours is 1000/108
-# http://www.lndinc.com/products/348/  <--"Gamma sensitivity Co60 (cps/mr/hr)  	18"
-# ^--or at least that's the sense we have from the above
-
 $BASE_DIR/gen_index
 
 gnuplot -e "OF='$OF';DAF='$DA_OF';MAF='$MA_OF'" $BASE_DIR/particle_specs.gnuplot
