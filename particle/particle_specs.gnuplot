@@ -10,6 +10,10 @@ set ylabel "nGy/h"
 set y2label "nGy/h"
 set term png size 2000, 512 font ",10"
 
+# for the lnd 712 we think the conversion factor between collected cpm data and nano grays per hours is 1000/108
+# http://www.lndinc.com/products/348/  <--"Gamma sensitivity Co60 (cps/mr/hr)   18"
+# ^--or at least that's the sense we have from the above
+
 set title "Radioactivity over the last ~8 hours."
 set xtics 3600
 set output 'particle_cpm_8.png'
