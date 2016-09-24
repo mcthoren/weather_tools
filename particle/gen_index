@@ -16,13 +16,13 @@ This page is still a bit of a work in progress, expect things to improve shortly
 
 END="</table>
 <br>
-<img src=\"http://wx.slackology.net/test/particle/plots/particle_cpm_8.png\"><br><br>
-<img src=\"http://wx.slackology.net/test/particle/plots/particle_cpm_8_avg.png\"><br><br>
-<img src=\"http://wx.slackology.net/test/particle/plots/particle_cpm_24.png\"><br><br>
-<img src=\"http://wx.slackology.net/test/particle/plots/particle_cpm_24_avg.png\"><br><br>
-<img src=\"http://wx.slackology.net/test/particle/plots/particle_cpm_DA.45.png\"><br><br>
-<img src=\"http://wx.slackology.net/test/particle/plots/particle_cpm_DA.png\"><br><br>
-<img src=\"http://wx.slackology.net/test/particle/plots/particle_cpm_MA.png\"><br><br>
+<img src=\"http://wx.slackology.net/particle/plots/particle_cpm_8.png\"><br><br>
+<img src=\"http://wx.slackology.net/particle/plots/particle_cpm_8_avg.png\"><br><br>
+<img src=\"http://wx.slackology.net/particle/plots/particle_cpm_24.png\"><br><br>
+<img src=\"http://wx.slackology.net/particle/plots/particle_cpm_24_avg.png\"><br><br>
+<img src=\"http://wx.slackology.net/particle/plots/particle_cpm_DA.45.png\"><br><br>
+<img src=\"http://wx.slackology.net/particle/plots/particle_cpm_DA.png\"><br><br>
+<img src=\"http://wx.slackology.net/particle/plots/particle_cpm_MA.png\"><br><br>
 </center>
 <br> <br>
 </body> </html>"
