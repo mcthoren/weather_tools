@@ -15,12 +15,16 @@ The sht11 will display humidity over 100%, and sometimes does so when there's a 
 
 Prerequisite:
 
-We need the Adafruit GPIO and BMP python libs, they can be obtained via git like so:
-git clone https://github.com/adafruit/Adafruit_Python_GPIO.git
-git clone https://github.com/adafruit/Adafruit_Python_BMP.git
+* We need the Adafruit GPIO and BMP python libs, they can be obtained via git like so:
+	git clone https://github.com/adafruit/Adafruit_Python_GPIO.git
+	git clone https://github.com/adafruit/Adafruit_Python_BMP.git
 
-one would then want to hop into their respective directories and do sth like the following:
-sudo python setup.py install
+	One would then want to hop into their respective directories and do sth like the following:
+	sudo python setup.py install
 
-A number of directories need to be created, inside of $OVER_DIR:
-mkdir data plots particle/data
+* A number of directories need to be created. Inside of $OVER_DIR, do:
+	mkdir data plots particle/data
+
+* The i2c bus needs to be enabled.
+	prly easiest to use sth like raspi-config and enable it there.
+	make sure your user is in the i2c group
