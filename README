@@ -13,4 +13,14 @@ As the data strings begin with the date, patterns search for strings that start 
 
 The sht11 will display humidity over 100%, and sometimes does so when there's a lot of fog and mist around, so the patterns were updated to reflect this.
 
-My internet connection REALLY sucks atm, so we eat the output of rsync and added some switches to deal with that.
+Prerequisite:
+
+We need the Adafruit GPIO and BMP python libs, they can be obtained via git like so:
+git clone https://github.com/adafruit/Adafruit_Python_GPIO.git
+git clone https://github.com/adafruit/Adafruit_Python_BMP.git
+
+one would then want to hop into their respective directories and do sth like the following:
+sudo python setup.py install
+
+A number of directories need to be created, inside of $OVER_DIR:
+mkdir data plots particle/data
