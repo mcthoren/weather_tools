@@ -23,7 +23,7 @@ Prerequisite:
 	sudo python setup.py install
 
 * A number of directories need to be created. Inside of $OVER_DIR, do:
-	mkdir data plots particle/data
+	mkdir data plots particle/data particle/plots
 
 * The i2c bus needs to be enabled.
 	prly easiest to use sth like raspi-config and enable it there.
