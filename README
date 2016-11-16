@@ -28,3 +28,8 @@ Prerequisite:
 * The i2c bus needs to be enabled.
 	prly easiest to use sth like raspi-config and enable it there.
 	make sure your user is in the i2c group
+
+* The shtx sensor also needs a module, and some help.
+	install module from:
+	https://pypi.python.org/pypi/rpiSht1x
+	
