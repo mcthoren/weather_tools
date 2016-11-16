@@ -4,6 +4,8 @@ import RPi.GPIO as GPIO
 import time
 import datetime
 
+data_f_n_plate = "/home/ghz/wx/particle/data/data"
+
 count = 0
 
 time0 = time.time()
@@ -12,6 +14,12 @@ time1 = time.time()
 GPIO.setmode(GPIO.BCM)
 
 GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
+def write_out(ts, data):
+	f_ts = ts[0:8]
+	out_file_fd = open(data_f_n_plate+'.'+f_ts, 'a')
+	out_file_fd.write(data)
+	out_file_fd.close()
 
 def my_callback(channel):
 	global count, time0, time1
@@ -22,7 +30,8 @@ def my_callback(channel):
 
 	if(time2 > 60):
 		ts =  datetime.datetime.fromtimestamp(time1).strftime("%Y%m%d%H%M%S")
-		print "%s %.2f cpm" % (ts, count/(60/time2))
+		dat_string = "%s %.2f cpm" % (ts, count/(60/time2))
+		write_out(ts, dat_string)
 		count = 0
 		time0 = time.time()
 
