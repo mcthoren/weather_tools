@@ -15,8 +15,8 @@ def write_out(file_name, data, mode):
 	out_file_fd.write(data)
 	out_file_fd.close()
 
-def write_out_dat_stamp(n_plate, data):
-	f_ts =  datetime.datetime.fromtimestamp(time.time()).strftime("%Y%m%d")
+def write_out_dat_stamp(ts, n_plate, data):
+	f_ts = ts[0:8]
 	write_out(wx_dir+'/data/'+n_plate+'.'+f_ts, data, 'a')
 
 def htu21df_read():
@@ -59,7 +59,7 @@ def htu21df_read():
 
 	dat_string = "%s\tTemp: %.2f C\tHumidity: %.2f %%\tDew Point: %.2f C\n" % (ts, temp, hum, T_dew)
 
-	write_out_dat_stamp('htu21df_grab.dat', dat_string)
+	write_out_dat_stamp(ts, 'htu21df_grab.dat', dat_string)
 	
 	return (temp, hum, T_dew)
 
@@ -92,7 +92,7 @@ def bmp085_read():
 
 	dat_string = "%s\t%.2f C\t\t%.3f kPa\n" % (ts, temp, ((avg / 1000.0) + mslp_calibration))
 
-	write_out_dat_stamp('bmp0085_grab.dat', dat_string)
+	write_out_dat_stamp(ts, 'bmp0085_grab.dat', dat_string)
 
 	return (temp, (avg / 1000.0) + mslp_calibration)
 
@@ -114,7 +114,7 @@ def sht11_read():
 
 	dat_string = "%s\tTemp: %.2f C\tHumidity: %.2f %%\tDew Point: %.2f C\n" % (ts, temperature, humidity, dp)
 
-	write_out_dat_stamp('sht11_grab.dat', dat_string)
+	write_out_dat_stamp(ts, 'sht11_grab.dat', dat_string)
 
 	return (temperature, humidity, dp)
 
@@ -129,7 +129,7 @@ def pi_temp_read():
 
 	dat_string = "%s\t%s" % (ts, temp_data)
 
-	write_out_dat_stamp('pi_temp', dat_string)
+	write_out_dat_stamp(ts, 'pi_temp', dat_string)
 
 	return (float(temp_data) / 1000)
 
