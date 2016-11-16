@@ -30,7 +30,7 @@ def my_callback(channel):
 
 	if(time2 > 60):
 		ts =  datetime.datetime.fromtimestamp(time1).strftime("%Y%m%d%H%M%S")
-		dat_string = "%s %.2f cpm" % (ts, count/(60/time2))
+		dat_string = "%s %.2f cpm\n" % (ts, count/(60/time2))
 		write_out(ts, dat_string)
 		count = 0
 		time0 = time.time()
