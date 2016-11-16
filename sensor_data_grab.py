@@ -15,6 +15,10 @@ def write_out(file_name, data, mode):
 	out_file_fd.write(data)
 	out_file_fd.close()
 
+def write_out_dat_stamp(n_plate, data):
+	f_ts =  datetime.datetime.fromtimestamp(time.time()).strftime("%Y%m%d")
+	write_out(wx_dir+'/data/'+n_plate+'.'+f_ts, data, 'a')
+
 def htu21df_read():
 	# https://www.adafruit.com/product/1899
 	
@@ -41,7 +45,6 @@ def htu21df_read():
 	time.sleep(0.2)
 
 	ts =  datetime.datetime.fromtimestamp(time.time()).strftime("%Y%m%d%H%M%S")
-	f_ts =  datetime.datetime.fromtimestamp(time.time()).strftime("%Y%m%d")
 
 	array = dev0.readList(temp_read, 2)
 	t0 = (array[0] * 256.0) + array[1]
@@ -56,10 +59,8 @@ def htu21df_read():
 
 	dat_string = "%s\tTemp: %.2f C\tHumidity: %.2f %%\tDew Point: %.2f C\n" % (ts, temp, hum, T_dew)
 
-	write_out(wx_dir+'/data/htu21df_grab.dat.'+f_ts, dat_string, 'a')
+	write_out_dat_stamp('htu21df_grab.dat', dat_string)
 	
-	# print "%s\tTemp: %.2f C\tHumidity: %.2f %%\tDew Point: %.2f C" % (ts, temp, hum, T_dew)
-
 	return (temp, hum, T_dew)
 
 def bmp085_read():
@@ -73,7 +74,6 @@ def bmp085_read():
 	sensor = BMP085.BMP085(mode=BMP085.BMP085_ULTRAHIGHRES)
 
 	ts = datetime.datetime.fromtimestamp(time.time()).strftime("%Y%m%d%H%M%S")
-	f_ts =  datetime.datetime.fromtimestamp(time.time()).strftime("%Y%m%d")
 
 	temp = sensor.read_temperature()
 
@@ -92,9 +92,7 @@ def bmp085_read():
 
 	dat_string = "%s\t%.2f C\t\t%.3f kPa\n" % (ts, temp, ((avg / 1000.0) + mslp_calibration))
 
-	write_out(wx_dir+'/data/bmp0085_grab.dat.'+f_ts, dat_string, 'a')
-
-	# print "%s\t%.2f C\t\t%.3f kPa" % (ts, temp, ((avg / 1000.0) + mslp_calibration))
+	write_out_dat_stamp('bmp0085_grab.dat', dat_string)
 
 	return (temp, (avg / 1000.0) + mslp_calibration)
 
@@ -109,7 +107,6 @@ def sht11_read():
 	sht1x = SHT1x(dataPin, clkPin, SHT1x.GPIO_BOARD)
 
 	ts = datetime.datetime.fromtimestamp(time.time()).strftime("%Y%m%d%H%M%S")
-	f_ts =  datetime.datetime.fromtimestamp(time.time()).strftime("%Y%m%d")
 
 	temperature = sht1x.read_temperature_C()
 	humidity = sht1x.read_humidity()
@@ -117,13 +114,7 @@ def sht11_read():
 
 	dat_string = "%s\tTemp: %.2f C\tHumidity: %.2f %%\tDew Point: %.2f C\n" % (ts, temperature, humidity, dp)
 
-	write_out(wx_dir+'/data/sht11_grab.dat.'+f_ts, dat_string, 'a')
-	# out_file_n = wx_dir+'/data/sht11_grab.dat.'+f_ts
-	# out_file_fd = open(out_file_n, 'a')
-	# out_file_fd.write(dat_string)
-	# out_file_fd.close()
-
-	# print "Temp: %.2f C\tHumidity: %.2f %%\tDew Point: %.2f C" % (temperature, humidity, dp)
+	write_out_dat_stamp('sht11_grab.dat', dat_string)
 
 	return (temperature, humidity, dp)
 
@@ -132,14 +123,13 @@ def pi_temp_read():
 	temp_file_fd = open(temp_file, 'r')
 
 	ts = datetime.datetime.fromtimestamp(time.time()).strftime("%Y%m%d%H%M%S")
-	f_ts =  datetime.datetime.fromtimestamp(time.time()).strftime("%Y%m%d")
 
 	temp_data = temp_file_fd.read()
 	temp_file_fd.close()
 
 	dat_string = "%s\t%s" % (ts, temp_data)
 
-	write_out(wx_dir+'/data/pi_temp.'+f_ts, dat_string, 'a')
+	write_out_dat_stamp('pi_temp', dat_string)
 
 	return (float(temp_data) / 1000)
 
