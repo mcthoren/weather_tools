@@ -2,7 +2,7 @@
 <html> <head> <title> danger! test product! </title> </head> 
 <body  bgcolor="#000000" text="#206cff" link="#0099ff" vlink="#00ffff"> 
 <center>
-<br> Weather from Kiel (Northern Germany), uncalibrated, just playing with a raspberry pi and some adafruit kit.
+<br> Weather from Berlin.
 <br> <br>
 <br> Current Conditions (updates every ~60s):
 
