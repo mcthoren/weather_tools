@@ -13,7 +13,7 @@ As the data strings begin with the date, patterns search for strings that start 
 
 The sht11 will display humidity over 100%, and sometimes does so when there's a lot of fog and mist around, so the patterns were updated to reflect this.
 
-Prerequisite:
+Prerequisites:
 
 * We need the Adafruit GPIO and BMP python libs, they can be obtained via git like so:
 	git clone https://github.com/adafruit/Adafruit_Python_GPIO.git
@@ -27,7 +27,7 @@ Prerequisite:
 
 * The i2c bus needs to be enabled.
 	prly easiest to use sth like raspi-config and enable it there.
-	make sure your user is in the i2c group
+	make sure your user is in the i2c and gpio groups
 
 * The shtx sensor also needs a module, and some help.
 	install module from:
