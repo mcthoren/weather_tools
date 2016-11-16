@@ -10,6 +10,11 @@ import datetime
 
 wx_dir = "/home/ghz/wx"
 
+def write_out(file_name, data, mode):
+	out_file_fd = open(file_name, mode)
+	out_file_fd.write(data)
+	out_file_fd.close()
+
 def htu21df_read():
 	# https://www.adafruit.com/product/1899
 	
@@ -51,10 +56,7 @@ def htu21df_read():
 
 	dat_string = "%s\tTemp: %.2f C\tHumidity: %.2f %%\tDew Point: %.2f C\n" % (ts, temp, hum, T_dew)
 
-	out_file_n = wx_dir+'/data/htu21df_grab.dat.'+f_ts
-	out_file_fd = open(out_file_n, 'a')
-	out_file_fd.write(dat_string)
-	out_file_fd.close()
+	write_out(wx_dir+'/data/htu21df_grab.dat.'+f_ts, dat_string, 'a')
 	
 	# print "%s\tTemp: %.2f C\tHumidity: %.2f %%\tDew Point: %.2f C" % (ts, temp, hum, T_dew)
 
@@ -90,10 +92,7 @@ def bmp085_read():
 
 	dat_string = "%s\t%.2f C\t\t%.3f kPa\n" % (ts, temp, ((avg / 1000.0) + mslp_calibration))
 
-	out_file_n = wx_dir+'/data/bmp0085_grab.dat.'+f_ts
-	out_file_fd = open(out_file_n, 'a')
-	out_file_fd.write(dat_string)
-	out_file_fd.close()
+	write_out(wx_dir+'/data/bmp0085_grab.dat.'+f_ts, dat_string, 'a')
 
 	# print "%s\t%.2f C\t\t%.3f kPa" % (ts, temp, ((avg / 1000.0) + mslp_calibration))
 
@@ -118,10 +117,11 @@ def sht11_read():
 
 	dat_string = "%s\tTemp: %.2f C\tHumidity: %.2f %%\tDew Point: %.2f C\n" % (ts, temperature, humidity, dp)
 
-	out_file_n = wx_dir+'/data/sht11_grab.dat.'+f_ts
-	out_file_fd = open(out_file_n, 'a')
-	out_file_fd.write(dat_string)
-	out_file_fd.close()
+	write_out(wx_dir+'/data/sht11_grab.dat.'+f_ts, dat_string, 'a')
+	# out_file_n = wx_dir+'/data/sht11_grab.dat.'+f_ts
+	# out_file_fd = open(out_file_n, 'a')
+	# out_file_fd.write(dat_string)
+	# out_file_fd.close()
 
 	# print "Temp: %.2f C\tHumidity: %.2f %%\tDew Point: %.2f C" % (temperature, humidity, dp)
 
@@ -139,10 +139,7 @@ def pi_temp_read():
 
 	dat_string = "%s\t%s" % (ts, temp_data)
 
-	out_file_n = wx_dir+'/data/pi_temp.'+f_ts
-	out_file_fd = open(out_file_n, 'a')
-	out_file_fd.write(dat_string)
-	out_file_fd.close()
+	write_out(wx_dir+'/data/pi_temp.'+f_ts, dat_string, 'a')
 
 	return (float(temp_data) / 1000)
 
@@ -164,10 +161,7 @@ def gen_index(etemp, ehum, edp, press, bmptemp, itemp, ihum, idp, pitemp):
 	plate_dat = plate_dat.replace("PITEMP", str("%.2f" % pitemp))
 	plate_dat = plate_dat.replace("DATE", ts)
 
-	out_file_n = wx_dir+'/plots/wx.html'
-	out_file_fd = open(out_file_n, 'w')
-	out_file_fd.write(plate_dat)
-	out_file_fd.close()
+	write_out(wx_dir+'/plots/wx.html', plate_dat, 'w')
 
 if __name__ == "__main__":
 	(bmp_temp, press) = bmp085_read()
