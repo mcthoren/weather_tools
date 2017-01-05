@@ -2,7 +2,7 @@
 BASE_DIR="/home/ghz/wx/particle"
 DATA_DIR="$BASE_DIR/data"
 OUT_FILE="$BASE_DIR/plots/particles.html"
-DATE=`date +%T\ %Z\ %d\ %b\ %Y`
+DATE=`date +%FT%TZ`
 TDATE=`date +%Y%m%d`
 
 TOP="<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\">
