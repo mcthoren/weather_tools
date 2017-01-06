@@ -21,7 +21,7 @@ def write_out(ts, data):
 	out_file_fd.write(data)
 	out_file_fd.close()
 
-def my_callback(channel):
+def trigger_count(channel):
 	global count, time0, time1
 
 	time1 = time.time()
@@ -35,7 +35,7 @@ def my_callback(channel):
 		count = 0
 		time0 = time.time()
 
-GPIO.add_event_detect(17, GPIO.FALLING, callback=my_callback, bouncetime=20)
+GPIO.add_event_detect(17, GPIO.FALLING, callback=trigger_count, bouncetime=20)
 
 try:
 	while True:
