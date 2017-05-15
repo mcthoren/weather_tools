@@ -40,10 +40,10 @@ set output 'extdewtemp.png'
 plot TD.".ext_temp" using 1:2 title 'Ext Temp (C)' with lines linecolor rgb "#00DD00",\
 TD.".ext_dp" using 1:2 title 'Ext Dew Point (C)' with lines linecolor rgb "#00FFFF"
 
-set ylabel "Humidity (%)"
-set y2label "Humidity (%)"
+set ylabel "Relative Humidity (%)"
+set y2label "Relative Humidity (%)"
 set output 'inthumsht.png'
-plot TDSHT using 1:6 title 'Int Humidity (%)' with lines linecolor rgb "#0000C0" smooth bezier
+plot TDSHT using 1:6 title 'Internal Relative Humidity (%)' with lines linecolor rgb "#0000C0" smooth bezier
 
 set output 'exthum.png'
-plot TD.".ext_hum" using 1:2 title 'Ext Humidity (%)' with lines linecolor rgb "#00DDDD" smooth bezier
+plot TD.".ext_hum" using 1:2 title 'External Relative Humidity (%)' with lines linecolor rgb "#00DDDD" smooth bezier
