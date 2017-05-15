@@ -7,10 +7,10 @@
 <br> Current Conditions (updates every ~60s):
 
 <table borders>
-<tr><td>Ext Temp:</td> <td>EXTTEMP C</td> <td>Ext Humidity:</td> <td>EXTHUM %</td></tr>
+<tr><td>Ext Temp:</td> <td>EXTTEMP C</td> <td>Ext. Rel. Humidity:</td> <td>EXTHUM %</td></tr>
 <tr><td>Pressure:</td> <td>REL_PRESS kPa</td> <td>Int Temp 0:</td> <td>INTTEMP C</td></tr>
 <tr><td>Ext Dew Point:</td> <td>EXTDP C</td> <td>Int Temp 1:</td> <td>INTTEMPSHT C</td></tr>
-<tr><td>Int Humidity:</td> <td>INTHUMSHT %</td> <td>Pi Temp:</td>  <td>PITEMP C</td></tr>
+<tr><td>Int. Rel. Humidity:</td> <td>INTHUMSHT %</td> <td>Pi Temp:</td>  <td>PITEMP C</td></tr>
 <tr><td>Last Update:</td>  <td>DATE</td></tr>
 </table>
 
