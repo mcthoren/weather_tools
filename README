@@ -3,7 +3,7 @@ http://wx.slackology.net/test/plots/wx.html
 
 also see http://slackology.net/wxnotes.html for more info
 
-In theory, if wanted wanted to run this themselves, they could change the OVER_DIR variable, and some of the upload paths, and be off to a good start
+In theory, if one wanted to run this themselves, they could change the OVER_DIR variable, and some of the upload paths, and be off to a good start
 
 This is very much a work in progress, and is part of an ongoing project to tinker together a weather station from a raspberry pi.
 
