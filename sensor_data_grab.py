@@ -38,7 +38,8 @@ def bme680_read():
 	gas_res = sensor.data.gas_resistance
 
 	dat_string = "%s\tTemp: %.2f C\tHumidity: %.2f %%\tPressure: %.2f kPa\tAirQ: %.0f Ohms\n" % (ts, temp, hum, pressure / 10, gas_res)
-	print dat_string
+
+	write_out_dat_stamp(ts, 'bme680.dat', dat_string)
 		
 def pi_temp_read():
 	temp_file = "/sys/class/thermal/thermal_zone0/temp"
@@ -76,6 +77,6 @@ def gen_index(etemp, ehum, edp, press, bmptemp, itemp, ihum, idp, pitemp):
 	write_out(wx_dir+'/plots/wx.html', plate_dat, 'w')
 
 if __name__ == "__main__":
-	# pi_temp = pi_temp_read()
+	pi_temp = pi_temp_read()
 	# gen_index(e_temp, e_hum, e_dp, press, bmp_temp, i_temp, i_hum, i_dp, pi_temp)
 	bme680_read()
