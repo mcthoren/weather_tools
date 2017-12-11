@@ -37,7 +37,7 @@ def bme680_read():
 
 	gas_res = sensor.data.gas_resistance
 
-	dat_string = "%s\tTemp: %.2f C\tHumidity: %.2f %%\tPressure: %.2f kPa\tAirQ: %.0f Ohms\n" % (ts, temp, hum, pressure / 10, gas_res)
+	dat_string = "%s\tTemp: %.2f C\tHumidity: %.2f %%\tPressure: %.3f kPa\tAirQ: %d Ohms\n" % (ts, temp, hum, pressure / 10, gas_res)
 
 	write_out_dat_stamp(ts, 'bme680.dat', dat_string)
 		
