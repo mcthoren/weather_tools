@@ -21,15 +21,6 @@ set format y2
 
 set ylabel "Deg (C)"
 set y2label "Deg (C)"
-set output 'inttemp.png'
-plot TD.".int_temp" using 1:2 title 'Int Temp 0 (C)' with lines lt 1 smooth bezier,\
-TDSHT using 1:3 title 'Int Temp 1 (C)' with lines linecolor rgb "#FF00FF"
-
-set output 'intdewtemp.png'
-plot TD.".int_temp" using 1:2 title 'Int Temp 0 (C)' with lines lt 1 smooth bezier,\
-TDSHT using 1:3 title 'Int Temp 1 (C)' with lines linecolor rgb "#FF00FF",\
-TDSHT using 1:10 title 'Int Dew Point (C)' with lines linecolor rgb "#000FFF"
-
 set output 'pitemp.png'
 plot TDPT using 1:(($2/1000)) title 'Pi Temp (C)' with lines lt 2 smooth bezier
 
