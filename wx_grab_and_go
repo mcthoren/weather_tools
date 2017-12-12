@@ -14,7 +14,6 @@ touch $LOCK
 
 $OVER_DIR/sensor_data_grab.py
 $OVER_DIR/wx.go
-$OVER_DIR/particle/graph
 
 rsync -e "ssh -q" --timeout=60 -ur $OVER_DIR/* wx@darkdata.org:/wx/ 2>/dev/null
 
