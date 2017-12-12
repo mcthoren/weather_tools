@@ -34,11 +34,10 @@ $TD_DUMP0 | grep -A $NSAMP $YYDATEH > $TD || $TD_DUMP0 > $TD
 $TD_DUMP1 | grep -A $NSAMP $YYDATEH > $TDPT || $TD_DUMP1 > $TDPT
 
 # broken out into individual files to assist possible future filtering (bogus values, averaging, etc)
-$TD_DUMP0 |awk '{print $1, $2}' | $SPIKE_FILTER | grep -A $NSAMP $YYDATEH > $TD.int_temp || $TD_DUMP0 |awk '{print $1, $2}' | $SPIKE_FILTER > $TD.int_temp
 $TD_DUMP0 |awk '{print $1, $4}' | $SPIKE_FILTER | grep -A $NSAMP $YYDATEH > $TD.pressure || $TD_DUMP0 |awk '{print $1, $4}' | $SPIKE_FILTER > $TD.pressure
 
 cat $TD_EXT | awk '{print $1, $3}' | $SPIKE_FILTER | grep -A $NSAMP $YYDATEH > $TD.ext_temp || cat $TD_EXT | awk '{print $1, $3}' | $SPIKE_FILTER > $TD.ext_temp
 cat $TD_EXT | awk '{print $1, $6}' | $SPIKE_FILTER | grep -A $NSAMP $YYDATEH > $TD.ext_hum || cat $TD_EXT | awk '{print $1, $6}' | $SPIKE_FILTER > $TD.ext_hum
-cat $TD_EXT | awk '{print $1, $10}' | $SPIKE_FILTER | grep -A $NSAMP $YYDATEH > $TD.ext_dp || cat $TD_EXT | awk '{print $1, $10}' | $SPIKE_FILTER > $TD.ext_dp
+# cat $TD_EXT | awk '{print $1, $10}' | $SPIKE_FILTER | grep -A $NSAMP $YYDATEH > $TD.ext_dp || cat $TD_EXT | awk '{print $1, $10}' | $SPIKE_FILTER > $TD.ext_dp
 
 gnuplot -e "TD='$TD';TDPT='$TDPT'" $OVER_DIR/weather_specs.gnuplot
