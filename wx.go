@@ -19,12 +19,12 @@ YYDATE=`date -d "-2 day" +%Y%m%d`
 YYDATEH=`date -d "-2 day" +%Y%m%d%H`
 
 # make sure our data is sth like what we expect, this has evolved from necessity.
-PAT0"^2([0-9]{13})\tTemp:\ -?[0-9]?[0-9]\.[0-9]{2} C\tHumidity:\ [0-9]?[0-9]?[0-9]\.[0-9]{2} %\tPressure:\ [0-9]*\.[0-9]{3} kPa\tAirQ:\ .*Ohms$"
+PAT0="^2([0-9]{13})\tTemp:\ -?[0-9]?[0-9]\.[0-9]{2} C\tHumidity:\ [0-9]?[0-9]?[0-9]\.[0-9]{2} %\tPressure:\ [0-9]*\.[0-9]{3} kPa\tAirQ:\ .*Ohms$"
 
 # paste outputs a tab, the /proc file _seems_ to stick with 5 digits...
 PAT1="^$2([0-9]{14})\t-?[0-9]{5}$"
 
-TDS0="cat ../data/bme680.dat.$YYDATE ../data/bme680.dat.$YDATE ../data/bme680_grab.dat.$DATE | grep -aP \"$PAT0\""
+TDS0="cat ../data/bme680.dat.$YYDATE ../data/bme680.dat.$YDATE ../data/bme680.dat.$DATE | grep -aP \"$PAT0\""
 TDS1="cat ../data/pi_temp.$YYDATE ../data/pi_temp.$YDATE ../data/pi_temp.$DATE | grep -aP \"$PAT1\""
 
 TD_DUMP0="eval $TDS0"
@@ -41,4 +41,4 @@ $TD_DUMP1 | grep -A $NSAMP $YYDATEH > $TDPT || $TD_DUMP1 > $TDPT
 # cat $TD_EXT | awk '{print $1, $6}' | $SPIKE_FILTER | grep -A $NSAMP $YYDATEH > $TD.ext_hum || cat $TD_EXT | awk '{print $1, $6}' | $SPIKE_FILTER > $TD.ext_hum
 # cat $TD_EXT | awk '{print $1, $10}' | $SPIKE_FILTER | grep -A $NSAMP $YYDATEH > $TD.ext_dp || cat $TD_EXT | awk '{print $1, $10}' | $SPIKE_FILTER > $TD.ext_dp
 
-gnuplot -e "TD='$TD';TDPT='$TDPT'" $OVER_DIR/weather_specs.gnuplot
+# gnuplot -e "TD='$TD';TDPT='$TDPT'" $OVER_DIR/weather_specs.gnuplot
