@@ -11,25 +11,9 @@ The sensor data can sometimes be noisy, this combined with some of the things th
 
 As the data strings begin with the date, patterns search for strings that start with 2, in the hopes that i have sth better figured out before the year 2999. The history of computer science suggests that I will not.
 
-The sht11 will display humidity over 100%, and sometimes does so when there's a lot of fog and mist around, so the patterns were updated to reflect this.
-
-Prerequisites:
-
-* We need the Adafruit GPIO and BMP python libs, they can be obtained via git like so:
-	git clone https://github.com/adafruit/Adafruit_Python_GPIO.git
-	git clone https://github.com/adafruit/Adafruit_Python_BMP.git
-
-	One would then want to hop into their respective directories and do sth like the following:
-	sudo python setup.py install
-
 * A number of directories need to be created. Inside of $OVER_DIR, do:
 	mkdir data plots particle/data particle/plots
 
 * The i2c bus needs to be enabled.
 	prly easiest to use sth like raspi-config and enable it there.
 	make sure your user is in the i2c and gpio groups
-
-* The shtx sensor also needs a module, and some help.
-	install module from:
-	https://pypi.python.org/pypi/rpiSht1x
-	
