@@ -46,6 +46,8 @@ def bme680_read():
 	dat_string = "%s\tTemp: %.2f C\tHumidity: %.2f %%\tPressure: %.3f kPa\tAirQ: %d Ohms\n" % (ts, temp, hum, pressure / 10, gas_res)
 
 	write_out_dat_stamp(ts, 'bme680.dat', dat_string)
+
+	return (temp, hum, pressure /10, gas_res)
 		
 def pi_temp_read():
 	temp_file = "/sys/class/thermal/thermal_zone0/temp"
@@ -62,7 +64,7 @@ def pi_temp_read():
 
 	return (float(temp_data) / 1000)
 
-def gen_index(etemp, ehum, edp, press, bmptemp, itemp, ihum, idp, pitemp):
+def gen_index(etemp, ehum, press, pitemp):
 	plate = wx_dir+"/wx_index.html.template"
 	plate_fd = open(plate, 'r')
 	plate_dat = plate_fd.read()
@@ -72,11 +74,8 @@ def gen_index(etemp, ehum, edp, press, bmptemp, itemp, ihum, idp, pitemp):
 
 	plate_dat = plate_dat.replace("EXTTEMP", str("%.2f" % etemp))
 	plate_dat = plate_dat.replace("EXTHUM", str("%.2f" % ehum))
-	plate_dat = plate_dat.replace("EXTDP", str("%.2f" % edp))
+	# plate_dat = plate_dat.replace("EXTDP", str("%.2f" % edp))
 	plate_dat = plate_dat.replace("REL_PRESS", str("%.3f" % press))
-	plate_dat = plate_dat.replace("INTTEMPSHT", str("%.2f" % itemp))
-	plate_dat = plate_dat.replace("INTHUMSHT", str("%.2f" % ihum))
-	plate_dat = plate_dat.replace("INTTEMP", str("%.2f" % bmptemp))
 	plate_dat = plate_dat.replace("PITEMP", str("%.2f" % pitemp))
 	plate_dat = plate_dat.replace("DATE", ts)
 
@@ -84,5 +83,5 @@ def gen_index(etemp, ehum, edp, press, bmptemp, itemp, ihum, idp, pitemp):
 
 if __name__ == "__main__":
 	pi_temp = pi_temp_read()
-	bme680_read()
-	# gen_index(e_temp, e_hum, e_dp, press, bmp_temp, i_temp, i_hum, i_dp, pi_temp)
+	(e_temp, e_hum, press, gas_r) = bme680_read()
+	gen_index(e_temp, e_hum, press, pi_temp)
