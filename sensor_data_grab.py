@@ -84,5 +84,5 @@ def gen_index(etemp, ehum, edp, press, bmptemp, itemp, ihum, idp, pitemp):
 
 if __name__ == "__main__":
 	pi_temp = pi_temp_read()
-	# gen_index(e_temp, e_hum, e_dp, press, bmp_temp, i_temp, i_hum, i_dp, pi_temp)
 	bme680_read()
+	# gen_index(e_temp, e_hum, e_dp, press, bmp_temp, i_temp, i_hum, i_dp, pi_temp)
