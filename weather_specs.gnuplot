@@ -14,7 +14,7 @@ set y2label "kPa"
 set output 'pressure.png'
 set format y "%.2f"
 set format y2 "%.2f"
-plot TD.".pressure" using 1:2 title 'Pressure (kPa)' with lines linecolor rgb "#A020F0"
+plot TD using 1:9 title 'Pressure (kPa)' with lines linecolor rgb "#A020F0"
 
 set format y
 set format y2
@@ -25,16 +25,9 @@ set output 'pitemp.png'
 plot TDPT using 1:(($2/1000)) title 'Pi Temp (C)' with lines lt 2 smooth bezier
 
 set output 'exttemp.png'
-plot TD.".ext_temp" using 1:2 title 'Ext Temp (C)' with lines linecolor rgb "#00DD00"
-
-set output 'extdewtemp.png'
-plot TD.".ext_temp" using 1:2 title 'Ext Temp (C)' with lines linecolor rgb "#00DD00",\
-TD.".ext_dp" using 1:2 title 'Ext Dew Point (C)' with lines linecolor rgb "#00FFFF"
+plot TD using 1:3 title 'Ext Temp (C)' with lines linecolor rgb "#00DD00"
 
 set ylabel "Relative Humidity (%)"
 set y2label "Relative Humidity (%)"
-set output 'inthumsht.png'
-plot TDSHT using 1:6 title 'Internal Relative Humidity (%)' with lines linecolor rgb "#0000C0" smooth bezier
-
 set output 'exthum.png'
-plot TD.".ext_hum" using 1:2 title 'External Relative Humidity (%)' with lines linecolor rgb "#00DDDD" smooth bezier
+plot TD using 1:6 title 'External Relative Humidity (%)' with lines linecolor rgb "#00DDDD" smooth bezier
