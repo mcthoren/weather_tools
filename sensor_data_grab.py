@@ -17,6 +17,9 @@ def write_out_dat_stamp(ts, n_plate, data):
 	write_out(wx_dir+'/data/'+n_plate+'.'+f_ts, data, 'a')
 
 def bme680_read():
+# sensor + breakout board from:
+# https://www.adafruit.com/product/3660
+
 # libraries and examples from:
 # https://learn.pimoroni.com/tutorial/sandyj/getting-started-with-bme680-breakout
 
