@@ -23,12 +23,16 @@ def bme680_read():
 # libraries and examples from:
 # https://learn.pimoroni.com/tutorial/sandyj/getting-started-with-bme680-breakout
 
+	pressures = []
+	iter = 16
+	avg = 0
+
 	sensor = bme680.BME680(i2c_addr=0x77)
 
 	sensor.set_humidity_oversample(bme680.OS_2X)
 	sensor.set_pressure_oversample(bme680.OS_4X)
 	sensor.set_temperature_oversample(bme680.OS_8X)
-	sensor.set_filter(bme680.FILTER_SIZE_3)
+	# sensor.set_filter(bme680.FILTER_SIZE_3)
 	sensor.set_gas_status(bme680.ENABLE_GAS_MEAS)
 
 	sensor.set_gas_heater_temperature(320)
@@ -38,16 +42,22 @@ def bme680_read():
 	ts = datetime.datetime.fromtimestamp(time.time()).strftime("%Y%m%d%H%M%S")
 
 	temp = sensor.data.temperature
-	pressure = sensor.data.pressure
 	hum = sensor.data.humidity
+
+	# go back to avergaging pressure samples as in the bmp085 datasheet
+	for x in range(0, iter):
+		pressures.append(sensor.data.pressure)
+		avg += pressures[x]
+
+	pres_avg = avg / iter
 
 	gas_res = sensor.data.gas_resistance
 
-	dat_string = "%s\tTemp: %.2f C\tHumidity: %.2f %%\tPressure: %.3f kPa\tAirQ: %d Ohms\n" % (ts, temp, hum, pressure / 10, gas_res)
+	dat_string = "%s\tTemp: %.2f C\tHumidity: %.2f %%\tPressure: %.3f kPa\tAirQ: %d Ohms\n" % (ts, temp, hum, pres_avg / 10, gas_res)
 
 	write_out_dat_stamp(ts, 'bme680.dat', dat_string)
 
-	return (temp, hum, pressure /10, gas_res)
+	return (temp, hum, pres_avg / 10, gas_res)
 		
 def pi_temp_read():
 	temp_file = "/sys/class/thermal/thermal_zone0/temp"
