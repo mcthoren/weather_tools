@@ -1,5 +1,5 @@
 #!/usr/bin/python
-
+# -*- coding: utf-8 -*-
 
 import time
 import datetime
@@ -23,9 +23,16 @@ def bme680_read():
 # libraries and examples from:
 # https://learn.pimoroni.com/tutorial/sandyj/getting-started-with-bme680-breakout
 
+# dew point equations and constants from:
+# http://journals.ametsoc.org/doi/pdf/10.1175/BAMS-86-2-225
+
 	pressures = []
 	iter = 16
 	avg = 0
+
+	Ca = 17.625
+	Cb = 243.04 # [°C]
+	Cc = 610.94 # [Pa]
 
 	sensor = bme680.BME680(i2c_addr=0x77)
 
@@ -49,7 +56,7 @@ def bme680_read():
 		pressures.append(sensor.data.pressure)
 		avg += pressures[x]
 
-	pres_avg = avg / iter
+	pres_avg = avg / iter # [hPa]
 
 	gas_res = sensor.data.gas_resistance
 
