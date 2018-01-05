@@ -1,5 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html> <head> <title> danger! test product! </title> </head> 
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title> danger! test product! </title>
+</head>
 <body  bgcolor="#000000" text="#206cff" link="#0099ff" vlink="#00ffff"> 
 <center>
 <br><h1>Weather from Berlin</h1><h3>(balcony in Moabit).</h3>
@@ -7,9 +11,9 @@
 <br> Current Conditions (updates every ~60s):
 
 <table borders>
-<tr><td>Ext Temp:</td> <td>EXTTEMP C</td> <td>Ext. Rel. Humidity:</td> <td>EXTHUM %</td></tr>
-<tr><td>Pressure:</td> <td>REL_PRESS kPa</td> <td>Pi Temp:</td>  <td>PITEMP C</td></tr>
-<tr><td>Dew Point:</td> <td>EXTDP C</td> <td>Last Update:</td>  <td>DATE</td></tr>
+<tr><td>Ext Temp:</td> <td>EXTTEMP°C</td> <td>Ext. Rel. Humidity:</td> <td>EXTHUM %</td></tr>
+<tr><td>Pressure:</td> <td>REL_PRESS kPa</td> <td>Pi Temp:</td>  <td>PITEMP°C</td></tr>
+<tr><td>Dew Point:</td> <td>EXTDP°C</td> <td>Last Update:</td>  <td>DATE</td></tr>
 </table>
 
 <br>
