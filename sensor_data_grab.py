@@ -85,7 +85,7 @@ def pi_temp_read():
 
 	return (float(temp_data) / 1000)
 
-def gen_index(etemp, ehum, press, pitemp):
+def gen_index(etemp, ehum, press, pitemp, edp):
 	plate = wx_dir+"/wx_index.html.template"
 	plate_fd = open(plate, 'r')
 	plate_dat = plate_fd.read()
@@ -95,7 +95,7 @@ def gen_index(etemp, ehum, press, pitemp):
 
 	plate_dat = plate_dat.replace("EXTTEMP", str("%.2f" % etemp))
 	plate_dat = plate_dat.replace("EXTHUM", str("%.2f" % ehum))
-	# plate_dat = plate_dat.replace("EXTDP", str("%.2f" % edp))
+	plate_dat = plate_dat.replace("EXTDP", str("%.2f" % edp))
 	plate_dat = plate_dat.replace("REL_PRESS", str("%.3f" % press))
 	plate_dat = plate_dat.replace("PITEMP", str("%.2f" % pitemp))
 	plate_dat = plate_dat.replace("DATE", ts)
@@ -106,4 +106,4 @@ if __name__ == "__main__":
 	press_cal = 0.37 # kPa
 	pi_temp = pi_temp_read()
 	(e_temp, e_hum, press, gas_r, Tdew) = bme680_read()
-	gen_index(e_temp, e_hum, press + press_cal, pi_temp)
+	gen_index(e_temp, e_hum, press + press_cal, pi_temp, Tdew)

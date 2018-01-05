@@ -9,7 +9,7 @@
 <table borders>
 <tr><td>Ext Temp:</td> <td>EXTTEMP C</td> <td>Ext. Rel. Humidity:</td> <td>EXTHUM %</td></tr>
 <tr><td>Pressure:</td> <td>REL_PRESS kPa</td> <td>Pi Temp:</td>  <td>PITEMP C</td></tr>
-<tr><td>Last Update:</td>  <td>DATE</td></tr>
+<tr><td>Dew Point:</td> <td>EXTDP C</td> <td>Last Update:</td>  <td>DATE</td></tr>
 </table>
 
 <br>
