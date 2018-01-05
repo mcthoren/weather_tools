@@ -3,7 +3,6 @@
 
 import time
 import datetime
-import bme680
 
 wx_dir = "/home/ghz/wx"
 
@@ -17,14 +16,17 @@ def write_out_dat_stamp(ts, n_plate, data):
 	write_out(wx_dir+'/data/'+n_plate+'.'+f_ts, data, 'a')
 
 def bme680_read():
-# sensor + breakout board from:
-# https://www.adafruit.com/product/3660
+	# sensor + breakout board from:
+	# https://www.adafruit.com/product/3660
 
-# libraries and examples from:
-# https://learn.pimoroni.com/tutorial/sandyj/getting-started-with-bme680-breakout
+	# libraries and examples from:
+	# https://learn.pimoroni.com/tutorial/sandyj/getting-started-with-bme680-breakout
 
-# dew point equations and constants from:
-# http://journals.ametsoc.org/doi/pdf/10.1175/BAMS-86-2-225
+	# dew point equations and constants from:
+	# http://journals.ametsoc.org/doi/pdf/10.1175/BAMS-86-2-225
+
+	import bme680
+	import math
 
 	pressures = []
 	iter = 16
@@ -32,7 +34,6 @@ def bme680_read():
 
 	Ca = 17.625
 	Cb = 243.04 # [°C]
-	Cc = 610.94 # [Pa]
 
 	sensor = bme680.BME680(i2c_addr=0x77)
 
@@ -51,6 +52,9 @@ def bme680_read():
 	temp = sensor.data.temperature
 	hum = sensor.data.humidity
 
+	gamma = math.log(hum / 100) + ((Ca * temp) / (Cb + temp))
+	Tdew = (Cb * gamma) / (Ca - gamma)
+
 	# go back to avergaging pressure samples as in the bmp085 datasheet
 	for x in range(0, iter):
 		pressures.append(sensor.data.pressure)
@@ -60,11 +64,11 @@ def bme680_read():
 
 	gas_res = sensor.data.gas_resistance
 
-	dat_string = "%s\tTemp: %.2f C\tHumidity: %.2f %%\tPressure: %.3f kPa\tAirQ: %d Ohms\n" % (ts, temp, hum, pres_avg / 10, gas_res)
+	dat_string = "%s\tTemp: %.2f C\tHumidity: %.2f %%\tPressure: %.3f kPa\tAirQ: %d Ohms\tTdew: %.2f C\n" % (ts, temp, hum, pres_avg / 10, gas_res, Tdew)
 
 	write_out_dat_stamp(ts, 'bme680.dat', dat_string)
 
-	return (temp, hum, pres_avg / 10, gas_res)
+	return (temp, hum, pres_avg / 10, gas_res, Tdew)
 		
 def pi_temp_read():
 	temp_file = "/sys/class/thermal/thermal_zone0/temp"
@@ -101,5 +105,5 @@ def gen_index(etemp, ehum, press, pitemp):
 if __name__ == "__main__":
 	press_cal = 0.37 # kPa
 	pi_temp = pi_temp_read()
-	(e_temp, e_hum, press, gas_r) = bme680_read()
+	(e_temp, e_hum, press, gas_r, Tdew) = bme680_read()
 	gen_index(e_temp, e_hum, press + press_cal, pi_temp)
