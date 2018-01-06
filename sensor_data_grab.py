@@ -12,8 +12,12 @@ def write_out(file_name, data, mode):
 	out_file_fd.close()
 
 def write_out_dat_stamp(ts, n_plate, data):
+	# year directories should be created once a year from cron
+	# that way we aren't unnecessarily checking for one every minute of every day for a year
+
 	f_ts = ts[0:8]
-	write_out(wx_dir+'/data/'+n_plate+'.'+f_ts, data, 'a')
+	y_ts = ts[0:4]
+	write_out(wx_dir+'/data/'+y_ts+'/'+n_plate+'.'+f_ts, data, 'a')
 
 def bme680_read():
 	# sensor + breakout board from:
