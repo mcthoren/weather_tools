@@ -28,6 +28,10 @@ plot TDPT using 1:(($2/1000)) title 'Pi Temp (C)' with lines lt 2 smooth bezier
 set output 'exttemp.png'
 plot TD using 1:3 title 'Ext Temp (C)' with lines linecolor rgb "#00DD00"
 
+set output 'extdewtemp.png'
+plot TD using 1:3 title 'Ext Temp (C)' with lines linecolor rgb "#00DD00",\
+TD using 1:15 title 'Ext Dew Point (C)' with lines linecolor rgb "#00FFFF"
+
 set ylabel "Relative Humidity (%)"
 set y2label "Relative Humidity (%)"
 set output 'exthum.png'
