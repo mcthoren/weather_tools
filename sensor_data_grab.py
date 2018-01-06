@@ -62,7 +62,17 @@ def bme680_read():
 
 	pres_avg = avg / iter # [hPa]
 
-	gas_res = sensor.data.gas_resistance
+	gas_res = 0
+	tries = 5
+
+	while (tries > 0):
+		sensor.get_sensor_data()
+		if sensor.data.heat_stable:
+			gas_res = sensor.data.gas_resistance
+		else:
+			time.sleep(1)
+
+		tries = tries - 1
 
 	dat_string = "%s\tTemp: %.2f C\tHumidity: %.2f %%\tPressure: %.3f kPa\tAirQ: %d Ohms\tTdew: %.2f C\n" % (ts, temp, hum, pres_avg / 10, gas_res, Tdew)
 
