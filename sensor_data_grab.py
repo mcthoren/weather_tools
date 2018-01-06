@@ -55,7 +55,7 @@ def bme680_read():
 	gamma = math.log(hum / 100) + ((Ca * temp) / (Cb + temp))
 	Tdew = (Cb * gamma) / (Ca - gamma)
 
-	# go back to avergaging pressure samples as in the bmp085 datasheet
+	# go back to averaging pressure samples as in the bmp085 datasheet
 	for x in range(0, iter):
 		pressures.append(sensor.data.pressure)
 		avg += pressures[x]
