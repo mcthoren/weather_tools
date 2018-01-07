@@ -7,7 +7,7 @@
 <body  bgcolor="#000000" text="#206cff" link="#0099ff" vlink="#00ffff"> 
 <center>
 <br><h1>Weather from Berlin</h1><h3>(balcony in Moabit).</h3>
-<a href="http://slackology.net/wxnotes.html">More info on the weather notes page.</a><br>
+<a href="https://github.com/mcthoren/weather_tools/blob/master/README">More info on the weather notes page.</a><br>
 <br> Current Conditions (updates every ~60s):
 
 <table borders>
