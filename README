@@ -17,3 +17,6 @@ As the data strings begin with the date, patterns search for strings that start 
 * The i2c bus needs to be enabled.
 	prly easiest to use sth like raspi-config and enable it there.
 	make sure your user is in the i2c and gpio groups
+
+The Air Quality readings are currently raw data from the bme680, the datasheet for which can be found here:
+https://ae-bst.resource.bosch.com/media/_tech/media/datasheets/BST-BME680-DS001-00.pdf

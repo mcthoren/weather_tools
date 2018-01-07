@@ -36,3 +36,8 @@ set ylabel "Relative Humidity (%)"
 set y2label "Relative Humidity (%)"
 set output 'exthum.png'
 plot TD using 1:6 title 'External Relative Humidity (%)' with lines linecolor rgb "#00DDDD" smooth bezier
+
+set ylabel "Air Quality (Ohms)"
+set y2label "Air Quality (Ohms)"
+set output 'airquality.png'
+plot TD using 1:12 title 'Air Quality Sensor Reading (Ohms)' with lines lt 1
