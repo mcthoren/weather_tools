@@ -1,4 +1,4 @@
-set title "Weather Data for the Last ~48 Hours"
+set title "Weather Data for the Last \\~48 Hours"
 set xtics 7200
 set y2tics 
 set key outside below
