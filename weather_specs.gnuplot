@@ -17,8 +17,8 @@ set format y2 "%.2f"
 # calibration from http://www.met.fu-berlin.de/de/wetter/ [kPa]
 plot TD using 1:(($9 + 0.37)) title 'Pressure (kPa)' with lines linecolor rgb "#A020F0"
 
-set format y
-set format y2
+set format y "%.1f"
+set format y2 "%.1f"
 
 set ylabel "Deg (C)"
 set y2label "Deg (C)"
@@ -31,6 +31,9 @@ plot TD using 1:3 title 'Ext Temp (C)' with lines linecolor rgb "#00DD00"
 set output 'extdewtemp.png'
 plot TD using 1:3 title 'Ext Temp (C)' with lines linecolor rgb "#00DD00",\
 TD using 1:15 title 'Ext Dew Point (C)' with lines linecolor rgb "#00FFFF"
+
+set format y
+set format y2
 
 set ylabel "Relative Humidity (%)"
 set y2label "Relative Humidity (%)"
