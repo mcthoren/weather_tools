@@ -4,7 +4,7 @@ set y2tics
 set key outside below
 set xlabel "Time (UTC)" offset 0.0, -1.0;
 set xdata time;
-set format x "%m/%d\n%H:%M"
+set format x "--%m-%d\n%H:%MZ"
 set timefmt "%Y%m%d%H%M%S"
 set grid
 set term png size 2000, 512 font ",10"
