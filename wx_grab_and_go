@@ -18,7 +18,7 @@ $OVER_DIR/wx.go
 # try not to loose 20 min of data from hard reboots
 sync
 
-rsync -e "ssh -q" --timeout=60 -ur $OVER_DIR/* wx1@darkdata.org:/wx1/ 2>/dev/null
+# rsync -e "ssh -q" --timeout=60 -ur $OVER_DIR/* wx1@darkdata.org:/wx1/ 2>/dev/null
 rsync -e "ssh -q" --timeout=60 -ur $OVER_DIR/* wx1@dunkledaten.de:/wx1/ 2>/dev/null
 
 rm $LOCK
