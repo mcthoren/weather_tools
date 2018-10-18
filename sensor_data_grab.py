@@ -32,7 +32,6 @@ def bme680_read():
 	import bme680
 	import math
 
-	pressures = []
 	iter = 16
 	avg = 0
 
@@ -61,8 +60,7 @@ def bme680_read():
 
 	# go back to averaging pressure samples as in the bmp085 datasheet
 	for x in range(0, iter):
-		pressures.append(sensor.data.pressure)
-		avg += pressures[x]
+		avg += sensor.data.pressure
 
 	pres_avg = avg / iter # [hPa]
 
