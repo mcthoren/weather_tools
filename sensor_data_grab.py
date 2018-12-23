@@ -115,7 +115,7 @@ def gen_index(etemp, ehum, press, pitemp, edp):
 	write_out(wx_dir+'/plots/wx.html', plate_dat, 'w')
 
 if __name__ == "__main__":
-	press_cal = 0.37 # kPa
+	press_cal = 6.188 # kPa
 	pi_temp = pi_temp_read()
 	(e_temp, e_hum, press, gas_r, Tdew) = bme680_read()
 	gen_index(e_temp, e_hum, press + press_cal, pi_temp, Tdew)

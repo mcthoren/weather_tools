@@ -2,11 +2,11 @@
 <html>
 <head>
 <meta charset="UTF-8"/>
-<title>Weather Data for a Berlin Balcony</title>
+<title>Weather Data for a Balcony in Augsburg, Germany</title>
 </head>
 <body  bgcolor="#000000" text="#206cff" link="#0099ff" vlink="#00ffff"> 
 <center>
-<br><h1>Weather from Berlin</h1><h3>(balcony in Moabit).</h3>
+<br><h1>Weather from Augsburg, Germany</h1>
 <a href="https://github.com/mcthoren/weather_tools/blob/master/README">More info on the weather notes page.</a><br>
 <br> Current Conditions (updates every ~60s):
 

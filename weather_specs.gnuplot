@@ -14,8 +14,8 @@ set y2label "kPa"
 set output 'pressure.png'
 set format y "%.2f"
 set format y2 "%.2f"
-# calibration from http://www.met.fu-berlin.de/de/wetter/ [kPa]
-plot TD using 1:(($9 + 0.37)) title 'Pressure (kPa)' with lines linecolor rgb "#A020F0"
+# calibration from https://www.dwd.de/DE/wetter/wetterundklima_vorort/bayern/augsburg/_node.html [kPa]
+plot TD using 1:(($9 + 6.188)) title 'Pressure (kPa)' with lines linecolor rgb "#A020F0"
 
 set format y "%.1f"
 set format y2 "%.1f"
