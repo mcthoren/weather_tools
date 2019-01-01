@@ -28,8 +28,8 @@ PAT0="^2([0-9]{13})\tTemp:\ -?[0-9]?[0-9]\.[0-9]{2} C\tHumidity:\ [0-9]?[0-9]?[0
 # paste outputs a tab, the /proc file _seems_ to stick with 5 digits...
 PAT1="^$2([0-9]{14})\t-?[0-9]{5}$"
 
-TDS0="cat ../data/$DY/bme680.dat.$YYDATE ../data/$YDY/bme680.dat.$YDATE ../data/$YYDY/bme680.dat.$DATE | grep -aP \"$PAT0\""
-TDS1="cat ../data/$DY/pi_temp.$YYDATE ../data/$YDY/pi_temp.$YDATE ../data/$YYDY/pi_temp.$DATE | grep -aP \"$PAT1\""
+TDS0="cat ../data/$YYDY/bme680.dat.$YYDATE ../data/$YDY/bme680.dat.$YDATE ../data/$DY/bme680.dat.$DATE | grep -aP \"$PAT0\""
+TDS1="cat ../data/$YYDY/pi_temp.$YYDATE ../data/$YDY/pi_temp.$YDATE ../data/$DY/pi_temp.$DATE | grep -aP \"$PAT1\""
 
 TD_DUMP0="eval $TDS0"
 TD_DUMP1="eval $TDS1"
