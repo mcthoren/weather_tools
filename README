@@ -7,7 +7,7 @@ variable, and some of the upload paths, and be off to a good start
 This is part of an ongoing project to tinker together a weather station from a
 raspberry pi.
 
-The sensor data can sometimes be noisy, this combined with some of the things
+The sensor data used to be pretty noisy, this combined with some of the things
 that happen to the linux file system on the raspberry pi necessitated the very
 strict pattern matching observed toward the top of wx.go.
 
