@@ -32,13 +32,16 @@ set output 'extdewtemp.png'
 plot TD using 1:3 title 'Ext Temp (C)' with lines linecolor rgb "#00DD00",\
 TD using 1:15 title 'Ext Dew Point (C)' with lines linecolor rgb "#00FFFF"
 
-set format y
-set format y2
+set format y "%.2f"
+set format y2 "%.2f"
 
 set ylabel "Relative Humidity (%)"
 set y2label "Relative Humidity (%)"
 set output 'exthum.png'
 plot TD using 1:6 title 'External Relative Humidity (%)' with lines linecolor rgb "#00DDDD" smooth bezier
+
+set format y
+set format y2
 
 set ylabel "Air Quality (kOhms)"
 set y2label "Air Quality (kOhms)"
