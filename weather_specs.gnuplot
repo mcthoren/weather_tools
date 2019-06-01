@@ -23,7 +23,7 @@ set format y2 "%.1f"
 set ylabel "Deg (C)"
 set y2label "Deg (C)"
 set output 'pitemp.png'
-plot TDPT using 1:(($2/1000)) title 'Pi Temp (C)' with lines lt 2 smooth bezier
+plot TDPT using 1:(($2/1000)) title 'Pi Temp (C)' with lines linecolor rgb "#00DD00" smooth bezier
 
 set output 'exttemp.png'
 plot TD using 1:3 title 'Ext Temp (C)' with lines linecolor rgb "#00DD00"
@@ -46,4 +46,4 @@ set format y2
 set ylabel "Air Quality (kOhms)"
 set y2label "Air Quality (kOhms)"
 set output 'airquality.png'
-plot TD using 1:(($12 / 1000)) title 'Air Quality Sensor Reading (kOhms)' with lines lt 1
+plot TD using 1:(($12 / 1000)) title 'Air Quality Sensor Reading (kOhms)' with lines linecolor rgb "#FF0000"
