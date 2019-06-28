@@ -1,23 +1,12 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import time
-import datetime
+import time, datetime, sys
+
+sys.path.append('/home/ghz/wxlib')
+import wxlib as wx
 
 wx_dir = "/home/ghz/wx"
-
-def write_out(file_name, data, mode):
-	out_file_fd = open(file_name, mode)
-	out_file_fd.write(data)
-	out_file_fd.close()
-
-def write_out_dat_stamp(ts, n_plate, data):
-	# year directories should be created once a year from cron
-	# that way we aren't unnecessarily checking for one every minute of every day for a year
-
-	f_ts = ts[0:8]
-	y_ts = ts[0:4]
-	write_out(wx_dir+'/data/'+y_ts+'/'+n_plate+'.'+f_ts, data, 'a')
 
 def bme680_read():
 	# sensor + breakout board from:
@@ -78,25 +67,10 @@ def bme680_read():
 
 	dat_string = "%s\tTemp: %.2f C\tHumidity: %.2f %%\tPressure: %.3f kPa\tAirQ: %d Ohms\tTdew: %.2f C\n" % (ts, temp, hum, pres_avg / 10, gas_res, Tdew)
 
-	write_out_dat_stamp(ts, 'bme680.dat', dat_string)
+	wx.write_out_dat_stamp(ts, 'bme680.dat', dat_string, wx_dir)
 
 	return (temp, hum, pres_avg / 10, gas_res, Tdew)
 		
-def pi_temp_read():
-	temp_file = "/sys/class/thermal/thermal_zone0/temp"
-	temp_file_fd = open(temp_file, 'r')
-
-	ts = datetime.datetime.fromtimestamp(time.time()).strftime("%Y%m%d%H%M%S")
-
-	temp_data = temp_file_fd.read()
-	temp_file_fd.close()
-
-	dat_string = "%s\t%s" % (ts, temp_data)
-
-	write_out_dat_stamp(ts, 'pi_temp', dat_string)
-
-	return (float(temp_data) / 1000)
-
 def gen_index(etemp, ehum, press, pitemp, edp):
 	plate = wx_dir+"/wx_index.html.template"
 	plate_fd = open(plate, 'r')
@@ -112,10 +86,14 @@ def gen_index(etemp, ehum, press, pitemp, edp):
 	plate_dat = plate_dat.replace("PITEMP", str("%.2f" % pitemp))
 	plate_dat = plate_dat.replace("DATE", ts)
 
-	write_out(wx_dir+'/plots/wx.html', plate_dat, 'w')
+	wx.write_out(wx_dir+'/plots/wx.html', plate_dat, 'w')
 
 if __name__ == "__main__":
+	ts = datetime.datetime.fromtimestamp(time.time()).strftime("%Y%m%d%H%M%S")
+	pi_temp = wx.pi_temp_read()
+	pi_dat_string = "%s\t%s\n" % (ts, pi_temp)
+	wx.write_out_dat_stamp(ts, 'pi_temp', pi_dat_string, wx_dir)
+
 	press_cal = 5.900 # kPa
-	pi_temp = pi_temp_read()
 	(e_temp, e_hum, press, gas_r, Tdew) = bme680_read()
-	gen_index(e_temp, e_hum, press + press_cal, pi_temp, Tdew)
+	gen_index(e_temp, e_hum, press + press_cal, float(pi_temp) / 1000, Tdew)
