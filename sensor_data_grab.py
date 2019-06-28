@@ -15,17 +15,11 @@ def bme680_read():
 	# libraries and examples from:
 	# https://learn.pimoroni.com/tutorial/sandyj/getting-started-with-bme680-breakout
 
-	# dew point equations and constants from:
-	# http://journals.ametsoc.org/doi/pdf/10.1175/BAMS-86-2-225
-
 	import bme680
 	import math
 
 	iter = 16
 	avg = 0
-
-	Ca = 17.625
-	Cb = 243.04 # [°C]
 
 	sensor = bme680.BME680(i2c_addr=0x77)
 
@@ -41,9 +35,6 @@ def bme680_read():
 
 	temp = sensor.data.temperature
 	hum = sensor.data.humidity
-
-	gamma = math.log(hum / 100) + ((Ca * temp) / (Cb + temp))
-	Tdew = (Cb * gamma) / (Ca - gamma)
 
 	# go back to averaging pressure samples as in the bmp085 datasheet
 	for x in range(0, iter):
@@ -63,7 +54,7 @@ def bme680_read():
 
 		tries = tries - 1
 
-	return (temp, hum, pres_avg / 10, gas_res, Tdew)
+	return (temp, hum, pres_avg / 10, gas_res)
 		
 def gen_index(etemp, ehum, press, pitemp, edp):
 	plate = wx_dir+"/wx_index.html.template"
@@ -89,7 +80,8 @@ if __name__ == "__main__":
 	wx.write_out_dat_stamp(ts, 'pi_temp', pi_dat_string, wx_dir)
 
 	press_cal = 5.900 # kPa
-	(e_temp, e_hum, press, gas_r, Tdew) = bme680_read()
+	(e_temp, e_hum, press, gas_r) = bme680_read()
+	Tdew = wx.dew_point_c(e_temp, e_hum)
 
 	bme_dat_string = \
 	"%s\tTemp: %.2f C\tHumidity: %.2f %%\tPressure: %.3f kPa\tAirQ: %d Ohms\tTdew: %.2f C\n" \
