@@ -76,7 +76,7 @@ def gen_index(etemp, ehum, press, pitemp, edp):
 if __name__ == "__main__":
 	ts = datetime.datetime.fromtimestamp(time.time()).strftime("%Y%m%d%H%M%S")
 	pi_temp = wx.pi_temp_read()
-	pi_dat_string = "%s\t%s\n" % (ts, pi_temp)
+	pi_dat_string = "%s\t%s" % (ts, pi_temp)
 	wx.write_out_dat_stamp(ts, 'pi_temp', pi_dat_string, wx_dir)
 
 	press_cal = 5.900 # kPa
@@ -91,6 +91,9 @@ if __name__ == "__main__":
 
 	abs_hum = wx.abs_hum_g_mmm(e_temp, e_hum)
 	heat_i = wx.heat_index(e_temp, e_hum)
+	if (heat_i == -1):
+		heat_i = e_temp  # dirty hack cuz the model is pretty wonky outside a narrow range
+
 	derived_dat_string = \
 	"%s\tAbsolute Humidity: %.2f g/m³\tHeat Index: %.2f °C\tDew Point: %.2f °C\n" \
 	% (ts, abs_hum, heat_i, Tdew)
