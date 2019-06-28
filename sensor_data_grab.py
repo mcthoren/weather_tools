@@ -39,8 +39,6 @@ def bme680_read():
 	sensor.set_gas_heater_duration(150)
 	sensor.select_gas_heater_profile(0)
 
-	ts = datetime.datetime.fromtimestamp(time.time()).strftime("%Y%m%d%H%M%S")
-
 	temp = sensor.data.temperature
 	hum = sensor.data.humidity
 
@@ -64,10 +62,6 @@ def bme680_read():
 			time.sleep(1)
 
 		tries = tries - 1
-
-	dat_string = "%s\tTemp: %.2f C\tHumidity: %.2f %%\tPressure: %.3f kPa\tAirQ: %d Ohms\tTdew: %.2f C\n" % (ts, temp, hum, pres_avg / 10, gas_res, Tdew)
-
-	wx.write_out_dat_stamp(ts, 'bme680.dat', dat_string, wx_dir)
 
 	return (temp, hum, pres_avg / 10, gas_res, Tdew)
 		
@@ -96,4 +90,11 @@ if __name__ == "__main__":
 
 	press_cal = 5.900 # kPa
 	(e_temp, e_hum, press, gas_r, Tdew) = bme680_read()
+
+	bme_dat_string = \
+	"%s\tTemp: %.2f C\tHumidity: %.2f %%\tPressure: %.3f kPa\tAirQ: %d Ohms\tTdew: %.2f C\n" \
+	% (ts, e_temp, e_hum, press, gas_r, Tdew)
+
+	wx.write_out_dat_stamp(ts, 'bme680.dat', bme_dat_string, wx_dir)
+
 	gen_index(e_temp, e_hum, press + press_cal, float(pi_temp) / 1000, Tdew)
