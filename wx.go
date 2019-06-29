@@ -2,10 +2,22 @@
 # see http://slackology.net/wxnotes.html and
 # https://github.com/mcthoren/weather_tools for more info
 # this is about the 4th generation weather station at this point
+# this script is run from cron
 
 OVER_DIR="/home/ghz/wx"
+LOCK="$OVER_DIR/plots/LOCK.wx"
 BASE_DIR="$OVER_DIR/plots"
 NSAMP=4000
+
+[ -e $LOCK ] && {
+	echo "$0: lock exists" | logger
+	exit 1
+}
+
+# lock is also checked for and deleted on boot, in case of a crash
+touch $LOCK
+
+$OVER_DIR/sensor_data_grab.py
 
 cd $BASE_DIR/ ||exit 1
 TD="../data/last48h"
@@ -38,3 +50,11 @@ $TD_DUMP0 | grep -A $NSAMP $YYDATEH > $TD || $TD_DUMP0 > $TD
 $TD_DUMP1 | grep -A $NSAMP $YYDATEH > $TDPT || $TD_DUMP1 > $TDPT
 
 gnuplot -e "TD='$TD';TDPT='$TDPT'" $OVER_DIR/weather_specs.gnuplot
+
+# try not to loose 20 min of data from hard reboots
+sync
+
+# rsync -e "ssh -q" --timeout=60 -ur $OVER_DIR/* wx1@darkdata.org:/wx1/ 2>/dev/null
+rsync -e "ssh -q" --timeout=60 -ur $OVER_DIR/* wx1@dunkledaten.de:/wx1/ 2>/dev/null
+
+rm $LOCK
