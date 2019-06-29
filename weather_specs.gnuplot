@@ -32,6 +32,11 @@ set output 'extdewtemp.png'
 plot TD using 1:3 title 'Ext Temp (C)' with lines linecolor rgb "#00DD00",\
 TD using 1:15 title 'Ext Dew Point (C)' with lines linecolor rgb "#00FFFF"
 
+set ylabel "Absolute Humidity (g/m^3)"
+set y2label "Absolute Humidity (g/m^3)"
+set output 'abshum.png'
+plot TDDD using 1:4 title 'Absolute Humidity (g/m^3)' with lines linecolor rgb "#0000DD"
+
 set format y "%.2f"
 set format y2 "%.2f"
 
