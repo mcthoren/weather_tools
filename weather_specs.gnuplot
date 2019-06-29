@@ -20,25 +20,25 @@ plot TD using 1:(($9 + 5.900)) title 'Pressure (kPa)' with lines linecolor rgb "
 set format y "%.1f"
 set format y2 "%.1f"
 
-set ylabel "Deg (C)"
-set y2label "Deg (C)"
+set ylabel "(°C)"
+set y2label "(°C)"
 set output 'pitemp.png'
-plot TDPT using 1:(($2/1000)) title 'Pi Temp (C)' with lines linecolor rgb "#00DD00" smooth bezier
+plot TDPT using 1:(($2/1000)) title 'Pi Temp (°C)' with lines linecolor rgb "#00DD00" smooth bezier
 
 set output 'exttemp.png'
-plot TD using 1:3 title 'Ext Temp (C)' with lines linecolor rgb "#00DD00"
+plot TD using 1:3 title 'Ext Temp (°C)' with lines linecolor rgb "#00DD00"
 
 set output 'extdewtemp.png'
-plot TD using 1:3 title 'Ext Temp (C)' with lines linecolor rgb "#00DD00",\
-TD using 1:15 title 'Ext Dew Point (C)' with lines linecolor rgb "#00FFFF"
+plot TD using 1:3 title 'Ext Temp (°C)' with lines linecolor rgb "#00DD00",\
+TD using 1:15 title 'Ext Dew Point (°C)' with lines linecolor rgb "#00FFFF"
 
 set output 'heatindex.png'
 plot TDDD using 1:8 title 'Heat Index (°C)' with lines linecolor rgb "#FF0000"
 
-set ylabel "Absolute Humidity (g/m^3)"
-set y2label "Absolute Humidity (g/m^3)"
+set ylabel "Absolute Humidity (g/m³)"
+set y2label "Absolute Humidity (g/m³)"
 set output 'abshum.png'
-plot TDDD using 1:4 title 'Absolute Humidity (g/m^3)' with lines linecolor rgb "#0000DD"
+plot TDDD using 1:4 title 'Absolute Humidity (g/m³)' with lines linecolor rgb "#0000DD"
 
 set format y "%.2f"
 set format y2 "%.2f"
