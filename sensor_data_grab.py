@@ -83,15 +83,15 @@ if __name__ == "__main__":
 
 	press_cal = 5.900 # kPa
 	(e_temp, e_hum, press, gas_r) = bme680_read()
-	Tdew = wx.dew_point_c(e_temp, e_hum)
 
 	bme_dat_string = \
-	"%s\tTemp: %.2f C\tHumidity: %.2f %%\tPressure: %.3f kPa\tAirQ: %d Ohms\tTdew: %.2f C\n" \
-	% (ts, e_temp, e_hum, press, gas_r, Tdew)
+	"%s\tTemp: %.2f C\tHumidity: %.2f %%\tPressure: %.3f kPa\tAirQ: %d Ohms\n" \
+	% (ts, e_temp, e_hum, press, gas_r)
 
 	wx.write_out_dat_stamp(ts, 'bme680.dat', bme_dat_string, wx_dir)
 
 	abs_hum = wx.abs_hum_g_mmm(e_temp, e_hum)
+	Tdew = wx.dew_point_c(e_temp, e_hum)
 	heat_i = wx.heat_index(e_temp, e_hum)
 	if (heat_i == -1):
 		heat_i = e_temp  # dirty hack cuz the model is pretty wonky outside a narrow range
