@@ -33,10 +33,7 @@ YYDATE=`date -d "-2 day" +%Y%m%d`
 YYDATEH=`date -d "-2 day" +%Y%m%d%H`
 
 # make sure our data is sth like what we expect, this has evolved from necessity.
-# PAT0="^2([0-9]{13})\tTemp:\ -?[0-9]?[0-9]\.[0-9]{2} C\tHumidity:\ [0-9]?[0-9]?[0-9]\.[0-9]{2} %\tPressure:\ [0-9]*\.[0-9]{3} kPa\tAirQ:\ .*Ohms$"
-
-# hack the expression to match forms both with and without dewpoint for the next 48 hours
-PAT0="^2([0-9]{13})\tTemp:\ -?[0-9]?[0-9]\.[0-9]{2} C\tHumidity:\ [0-9]?[0-9]?[0-9]\.[0-9]{2} %\tPressure:\ [0-9]*\.[0-9]{3} kPa\tAirQ:\ .*$"
+PAT0="^2([0-9]{13})\tTemp:\ -?[0-9]?[0-9]\.[0-9]{2} C\tHumidity:\ [0-9]?[0-9]?[0-9]\.[0-9]{2} %\tPressure:\ [0-9]*\.[0-9]{3} kPa\tAirQ:\ .*Ohms$"
 
 # paste outputs a tab, the /proc file _seems_ to stick with 5 digits...
 PAT1="^$2([0-9]{14})\t-?[0-9]{5}$"
