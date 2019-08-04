@@ -1,10 +1,10 @@
 set title "Weather Data for the Last \\~48 Hours"
-set xtics 7200
+set xtics 7200 rotate by 30 offset -5.7, -2.2
 set y2tics 
 set key outside below
-set xlabel "Time (UTC)" offset 0.0, -1.0;
+set xlabel "Time (UTC)" offset 0.0, -1.6;
 set xdata time;
-set format x "--%m-%d\n%H:%MZ"
+set format x "%F\n%TZ"
 set timefmt "%Y%m%d%H%M%S"
 set grid
 set term png size 2000, 512 font ",10"
