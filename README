@@ -1,5 +1,7 @@
-All the tools I use for creating my little weather page here:
-https://wx1.slackology.net/plots/wx.html
+This code can be found in the follwing places:
+	https://wx1.slackology.net/plots/wx.html	<--page
+	https://github.com/mcthoren/weather_tools	<--code
+	https://wx1.slackology.net/			<--code, data, plots, page
 
 In theory, if one wanted to run this themselves, they could change the OVER_DIR
 variable, and some of the upload paths, and be off to a good start
