@@ -1,25 +1,29 @@
 This code can be found in the follwing places:
-	https://wx1.slackology.net/plots/wx.html	<--page
-	https://github.com/mcthoren/weather_tools	<--code
-	https://wx1.slackology.net/			<--code, data, plots, page
+* https://wx1.slackology.net/plots/wx.html	<--page
+* https://github.com/mcthoren/weather_tools	<--code
+* https://wx1.slackology.net/			<--code, data, plots, page
+
 
 In theory, if one wanted to run this themselves, they could change the OVER_DIR
 variable, and some of the upload paths, and be off to a good start
 
+
 This is part of an ongoing project to tinker together a weather station from a
 raspberry pi.
+
 
 The sensor data used to be pretty noisy, this combined with some of the things
 that happen to the linux file system on the raspberry pi necessitated the very
 strict pattern matching observed toward the top of wx.go.
+
 
 As the data strings begin with the date, patterns search for strings that start
 with 2, in the hopes that I have something better figured out before the year 2999.
 The history of computer science suggests that I will not.
 
 * The i2c bus needs to be enabled.  This is probably most easily done with
-  raspi-config.  Make sure your user is in the i2c and gpio groups
+  raspi-config.  Make sure your user is in the i2c and gpio groups 
 
 The Air Quality readings are currently raw data from the bme680, the datasheet
 for which can be found here:
-https://ae-bst.resource.bosch.com/media/_tech/media/datasheets/BST-BME680-DS001.pdf
+* https://ae-bst.resource.bosch.com/media/_tech/media/datasheets/BST-BME680-DS001.pdf
