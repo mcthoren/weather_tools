@@ -1,4 +1,4 @@
-This code can be found in the follwing places:
+This code can be found in the following places:
 * https://wx1.slackology.net/plots/wx.html	<--page
 * https://github.com/mcthoren/weather_tools	<--code
 * https://wx1.slackology.net/			<--code, data, plots, page
