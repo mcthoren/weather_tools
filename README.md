@@ -3,7 +3,7 @@ This code can be found in the following places:
 * https://github.com/mcthoren/weather_tools	<--code
 * https://wx1.slackology.net/			<--code, data, plots, page
 
-The datasheet for which can be found here:
+Much of the data for all this is currently collected from a BME680, the datasheet for which can be found here:
 * https://ae-bst.resource.bosch.com/media/_tech/media/datasheets/BST-BME680-DS001.pdf
 
 Notes:
