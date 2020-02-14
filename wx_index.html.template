@@ -1,11 +1,13 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="refresh" content="60">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="dd.css">
 <title>Weather Data for a Balcony in Augsburg, Germany</title>
 </head>
-<body  bgcolor="#000000" text="#206cff" link="#0099ff" vlink="#00ffff"> 
+<body>
 <center>
 <br><h1>Weather from Augsburg, Germany</h1>
 See <a href="https://github.com/mcthoren/weather_tools/">here</a> for more info.<br>
