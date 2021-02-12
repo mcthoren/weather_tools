@@ -35,8 +35,8 @@ YYDATEH=`date -d "-2 day" +%Y%m%d%H`
 # make sure our data is sth like what we expect, this has evolved from necessity.
 PAT0="^2([0-9]{13})\tTemp:\ -?[0-9]?[0-9]\.[0-9]{2} C\tHumidity:\ [0-9]?[0-9]?[0-9]\.[0-9]{2} %\tPressure:\ [0-9]*\.[0-9]{3} kPa\tAirQ:\ .*Ohms$"
 
-# paste outputs a tab, the /proc file _seems_ to stick with 5 digits...
-PAT1="^$2([0-9]{14})\t-?[0-9]{5}$"
+# 4 digits for when it gets more properly cold, 5 digits otherwise. 6 digits have not been seen.
+PAT1="^$2([0-9]{14})\t-?[0-9]{4,5}$"
 
 TDS0="cat ../data/$YYDY/bme680.dat.$YYDATE ../data/$YDY/bme680.dat.$YDATE ../data/$DY/bme680.dat.$DATE | grep -aP \"$PAT0\""
 TDS1="cat ../data/$YYDY/pi_temp.$YYDATE ../data/$YDY/pi_temp.$YDATE ../data/$DY/pi_temp.$DATE | grep -aP \"$PAT1\""
