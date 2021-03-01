@@ -14,6 +14,8 @@ Notes:
 
 * The i2c bus needs to be enabled.  This is probably most easily done with raspi-config.  Make sure your user is in the i2c and gpio groups 
 
+* apt install python3-smbus python3-bme680 #  <-- something like that will help one get off to a good start
+
 * The sensor data used to be pretty noisy, this combined with some of the things that happen to the linux file system on the raspberry pi necessitated the very strict pattern matching observed toward the top of wx.go.
 
 * As the data strings begin with the date, patterns search for strings that start with 2, in the hopes that I have something better figured out before the year 2999.  The history of computer science suggests that I will not.
