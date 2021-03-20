@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-import time, datetime, sys
+import time, datetime, sys, os
 
 sys.path.append('/home/ghz/wxlib')
 import wxlib as wx
@@ -28,13 +28,19 @@ def gen_index(etemp, ehum, press, pitemp, edp, abs_hum, heat_i):
 	wx.write_out(wx_dir+'/plots/wx.html', plate_dat, 'w')
 
 if __name__ == "__main__":
+	i2c_addr = 0x77
+	press_cal = 5.900 # kPa
+
+	if os.uname().nodename == 'keen':
+		i2c_addr = 0x76
+		press_cal = 10.0 # kPa
+
 	ts = datetime.datetime.fromtimestamp(time.time()).strftime("%Y%m%d%H%M%S")
 	pi_temp = wx.pi_temp_read()
 	pi_dat_string = "%s\t%s" % (ts, pi_temp)
 	wx.write_out_dat_stamp(ts, 'pi_temp', pi_dat_string, wx_dir)
 
-	press_cal = 5.900 # kPa
-	(e_temp, e_hum, press, gas_r) = wx.bme680_read()
+	(e_temp, e_hum, press, gas_r) = wx.bme680_read(i2c_addr)
 
 	bme_dat_string = \
 	"%s\tTemp: %.2f C\tHumidity: %.2f %%\tPressure: %.3f kPa\tAirQ: %d Ohms\n" \
