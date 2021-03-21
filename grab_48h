@@ -21,7 +21,10 @@ die "filename template should be a non zero length string" unless ("$f_tplate");
 my $out_dat_f = "$data_d/$f_tplate.2-3_day";
 my $out_dat_f_t = "$out_dat_f.tmp";
 
-unlink $out_dat_f or printf "could not delete $out_dat_f\n";
+if (-e $out_dat_f) {
+	unlink $out_dat_f or printf "could not delete $out_dat_f\n";
+}
+
 if (-e $out_dat_f_t) {
 	unlink $out_dat_f_t or printf "could not delete $out_dat_f_t\n";
 }
