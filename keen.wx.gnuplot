@@ -7,7 +7,7 @@ set xdata time;
 set format x "%F\n%TZ"
 set timefmt "%Y%m%d%H%M%S"
 set grid
-set term png size 2000, 512 font ",10"
+set term pngcairo size 2000, 512 font ",10"
 
 set title "Atmospheric pressure for the Last \\~48 Hours"
 set ylabel "Pressure (kPa)"
