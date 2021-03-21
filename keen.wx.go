@@ -2,8 +2,13 @@
 
 # meant to be called from cron every minute or so
 
-/import/home/ghz/repos/weather_tools/sensor_data_grab.py
+WT_DIR='/import/home/ghz/repos/weather_tools/'
 
-/import/home/ghz/repos/weather_tools/grab_48h /home/ghz/wx/data bme680.dat
-/import/home/ghz/repos/weather_tools/grab_48h /home/ghz/wx/data derived.dat
-/import/home/ghz/repos/weather_tools/grab_48h /home/ghz/wx/data pi_temp
+$WT_DIR/sensor_data_grab.py
+
+$WT_DIR/grab_48h /home/ghz/wx/data bme680.dat
+$WT_DIR/grab_48h /home/ghz/wx/data derived.dat
+$WT_DIR/grab_48h /home/ghz/wx/data pi_temp
+
+cd /home/ghz/wx/plots || exit 1
+gnuplot "$WT_DIR/keen.wx.gnuplot"
