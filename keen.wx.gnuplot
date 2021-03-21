@@ -21,7 +21,7 @@ TDPT='/home/ghz/wx/data/pi_temp.2-3_day'
 TDDD='/home/ghz/wx/data/derived.dat.2-3_day'
 
 # calibration from https://www.dwd.de/DE/wetter/wetterundklima_vorort/bayern/augsburg/_node.html [kPa]
-plot TD using 1:(($9 + 5.900)) title 'Atmospheric Pressure (kPa)' with lines linecolor rgb "#A020F0"
+plot TD using 1:(($9 + 6.000)) title 'Atmospheric Pressure (kPa)' with lines linecolor rgb "#A020F0"
 
 set format y "%.1f"
 set format y2 "%.1f"
@@ -32,7 +32,7 @@ set y2label "Pi Temp (°C)"
 set output 'pitemp.png'
 plot TDPT using 1:(($2/1000)) title 'Pi Temp (°C)' with lines linecolor rgb "#00DD00" smooth bezier
 
-set title "Outdoor Temperature for the Last \\~48 Hours"
+set title "Temperature for the Last \\~48 Hours"
 set ylabel "Temp (°C)"
 set y2label "Temp (°C)"
 set output 'exttemp.png'
