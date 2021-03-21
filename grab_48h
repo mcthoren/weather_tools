@@ -1,0 +1,60 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use POSIX qw(strftime);
+use utf8;
+use open qw(:std :utf8);
+use Encode qw(encode decode);
+
+@ARGV = map { decode("UTF-8", $_) } @ARGV;
+die "usage: program data_directory filename_template" unless ($#ARGV == 1);
+
+my $p_flag = 0;
+my $date = time;
+my $data_d = "$ARGV[0]";
+my $f_tplate = "$ARGV[1]";
+
+die "omg! data dir doesn't exist!" unless (-d "$data_d");
+die "filename template should be a non zero length string" unless ("$f_tplate");
+
+my $out_dat_f = "$data_d/$f_tplate.2-3_day";
+my $out_dat_f_t = "$out_dat_f.tmp";
+
+unlink $out_dat_f or printf "could not delete $out_dat_f\n";
+if (-e $out_dat_f_t) {
+	unlink $out_dat_f_t or printf "could not delete $out_dat_f_t\n";
+}
+
+open(OUT, ">>", $out_dat_f) or die "omg! can't open output file: $out_dat_f";
+open(OUT_t, ">>", $out_dat_f_t) or die "omg! can't open output file: $out_dat_f_t";
+
+my $date_pat = strftime "%Y%m%d%H", localtime($date - (2 * 86400));
+
+for (my $nday = 2; $nday >= 0; $nday--) {
+	my $date_it = $date - ($nday * 86400);
+
+	my $datey = strftime "%Y", localtime($date_it);
+	my $tdatey = strftime "%Y%m%d", localtime($date_it);
+
+	my $in_dat_f = "$data_d/$datey/$f_tplate.$tdatey";
+
+	if (-e $in_dat_f) {
+		open(IN, "<", $in_dat_f) or die "omg! can't open input file: $in_dat_f";
+
+		while (<IN>) {
+			$p_flag = 1 if(/^$date_pat/);
+			print OUT;
+			print OUT_t if($p_flag);
+		}
+		close(IN);
+	}
+}
+close(OUT);
+close(OUT_t);
+
+if (-e $out_dat_f_t && -s $out_dat_f_t >= 100000) {
+	rename $out_dat_f_t, $out_dat_f; 
+} elsif (-e $out_dat_f_t) {
+	unlink $out_dat_f_t or printf "could not delete $out_dat_f_t\n";
+}
