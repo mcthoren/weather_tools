@@ -58,7 +58,7 @@ for (my $nday = 2; $nday >= 0; $nday--) {
 close(OUT);
 close(OUT_t);
 
-if (-e $out_dat_f_t && -s $out_dat_f_t >= 100000) {
+if (-e $out_dat_f_t && -s $out_dat_f_t >= 50000) {
 	rename $out_dat_f_t, $out_dat_f; 
 } elsif (-e $out_dat_f_t) {
 	unlink $out_dat_f_t or printf "could not delete $out_dat_f_t\n";
