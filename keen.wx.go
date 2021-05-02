@@ -25,6 +25,6 @@ gnuplot "$WT_DIR/keen.wx.gnuplot"
 
 sync
 
-/usr/bin/rsync -ur --timeout=50 /home/ghz/wx /import/home/ghz/repos/dust_wx wx0_sync:/wx0/
+/usr/bin/rsync -ur --timeout=50 /home/ghz/wx /import/home/ghz/repos/dust_wx wx0_sync:/wx0/ 2> /dev/null
 
 rm "${LOCK}"
