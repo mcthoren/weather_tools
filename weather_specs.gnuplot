@@ -63,7 +63,7 @@ set title "Relative Humidity for the Last \\~48 Hours"
 set ylabel "Relative Humidity (%)"
 set y2label "Relative Humidity (%)"
 set output 'exthum.png'
-plot TD using 1:6 title 'Relative Humidity (%)' with lines linecolor rgb "#00DDDD" smooth bezier
+plot TD using 1:6 title 'Relative Humidity (%)' with lines linecolor rgb "#00DDDD"
 
 set format y
 set format y2
