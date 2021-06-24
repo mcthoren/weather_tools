@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" type="text/css" href="https://darkdata.org/dd.css">
 <link rel="icon" href="https://slackology.net/favicon.ico" type="image/png"/>
-<title>Weather Data for a Balcony in Augsburg, Germany</title>
+<title>Weather Data for Augsburg, Germany</title>
 </head>
 <body>
 <center>
@@ -15,7 +15,7 @@ See <a href="https://github.com/mcthoren/weather_tools/">here</a> for more info.
 <br> Current Conditions (updates every ~60s):
 
 <table borders>
-<tr><td>Ext Temp:</td> <td>EXTTEMP °C</td> <td>Rel. Humidity:</td> <td>EXTHUM %</td></tr>
+<tr><td>Temp:</td> <td>EXTTEMP °C</td> <td>Rel. Humidity:</td> <td>EXTHUM %</td></tr>
 <tr><td>Absolute Humidity:</td> <td>ABSHUM g/m³</td> <td>Heat Index:</td> <td>HTIDX °C</td></tr>
 <tr><td>Pressure:</td> <td>REL_PRESS kPa</td> <td>Pi Temp:</td>  <td>PITEMP °C</td></tr>
 <tr><td>Dew Point:</td> <td>EXTDP °C</td> <td>Last Update:</td>  <td>DATE</td></tr>
