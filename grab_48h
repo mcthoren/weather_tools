@@ -40,20 +40,26 @@ for (my $nday = 2; $nday >= 0; $nday--) {
 
 	my $datey = strftime "%Y", localtime($date_it);
 	my $tdatey = strftime "%Y%m%d", localtime($date_it);
+	my $tdatey_iso = strftime "%F", localtime($date_it);
 
 	my $in_dat_f = "$data_d/$datey/$f_tplate.$tdatey";
+	my $in_dat_f_iso = "$data_d/$datey/$f_tplate.$tdatey_iso";
 
 	if (-e $in_dat_f) {
 		open(IN, "<", $in_dat_f) or die "omg! can't open input file: $in_dat_f";
-
-		while (<IN>) {
-			$p_flag = 1 if(/^$date_pat/);
-			$p_flag = 1 if(/^$date_pat_iso/);
-			print OUT;
-			print OUT_t if($p_flag);
-		}
-		close(IN);
+	} elsif (-e $in_dat_f_iso) {
+		open(IN, "<", $in_dat_f_iso) or die "omg! can't open input file: $in_dat_f_iso";
+	} else {
+		die "omg! couldn't find any input files!";
 	}
+
+	while (<IN>) {
+		$p_flag = 1 if(/^$date_pat/);
+		$p_flag = 1 if(/^$date_pat_iso/);
+		print OUT;
+		print OUT_t if($p_flag);
+	}
+	close(IN);
 }
 close(OUT);
 close(OUT_t);
