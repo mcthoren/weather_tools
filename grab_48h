@@ -33,7 +33,7 @@ open(OUT, ">>", $out_dat_f) or die "omg! can't open output file: $out_dat_f";
 open(OUT_t, ">>", $out_dat_f_t) or die "omg! can't open output file: $out_dat_f_t";
 
 my $date_pat = strftime "%Y%m%d%H", localtime($date - (2 * 86400));
-my $date_pat_iso = strftime "%Y-%m-%dT%H:", localtime($date - (2 * 86400));
+my $date_pat_iso = strftime "%FT%H:", localtime($date - (2 * 86400));
 
 for (my $nday = 2; $nday >= 0; $nday--) {
 	my $date_it = $date - ($nday * 86400);
