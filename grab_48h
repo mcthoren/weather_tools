@@ -33,18 +33,26 @@ open(OUT, ">>", $out_dat_f) or die "omg! can't open output file: $out_dat_f";
 open(OUT_t, ">>", $out_dat_f_t) or die "omg! can't open output file: $out_dat_f_t";
 
 my $date_pat = strftime "%Y%m%d%H", localtime($date - (2 * 86400));
-my $date_pat_iso = strftime "%Y-%m-%dT%H:", localtime($date - (2 * 86400));
+my $date_pat_iso = strftime "%FT%H:", localtime($date - (2 * 86400));
 
 for (my $nday = 2; $nday >= 0; $nday--) {
 	my $date_it = $date - ($nday * 86400);
 
 	my $datey = strftime "%Y", localtime($date_it);
 	my $tdatey = strftime "%Y%m%d", localtime($date_it);
+	my $tdatey_iso = strftime "%F", localtime($date_it);
 
 	my $in_dat_f = "$data_d/$datey/$f_tplate.$tdatey";
+	my $in_dat_f_iso = "$data_d/$datey/$f_tplate.$tdatey_iso";
 
-	if (-e $in_dat_f) {
-		open(IN, "<", $in_dat_f) or die "omg! can't open input file: $in_dat_f";
+	if (-e $in_dat_f or -e $in_dat_f_iso) {
+		if (-e $in_dat_f) {
+			open(IN, "<", $in_dat_f) or die "omg! can't open input file: $in_dat_f";
+		} elsif (-e $in_dat_f_iso) {
+			open(IN, "<", $in_dat_f_iso) or die "omg! can't open input file: $in_dat_f_iso";
+		} else {
+			die "omg! couldn't find any input files!";
+		}
 
 		while (<IN>) {
 			$p_flag = 1 if(/^$date_pat/);
