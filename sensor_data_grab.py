@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-import time, datetime, sys, os
+import time, sys, os
 
 sys.path.append('/home/ghz/wxlib')
 import wxlib as wx
@@ -14,7 +14,7 @@ def gen_index(etemp, ehum, press, pitemp, edp, abs_hum, heat_i):
 	plate_dat = plate_fd.read()
 	plate_fd.close()
 
-	ts = datetime.datetime.fromtimestamp(time.time()).strftime("%FT%TZ")
+	ts = time.strftime("%FT%TZ", time.gmtime())
 
 	plate_dat = plate_dat.replace("EXTTEMP", str("%.2f" % etemp))
 	plate_dat = plate_dat.replace("EXTHUM", str("%.2f" % ehum))
@@ -34,7 +34,7 @@ if __name__ == "__main__":
 	if os.uname().nodename == 'keen':
 		i2c_addr = 0x76
 
-	ts = datetime.datetime.fromtimestamp(time.time()).strftime("%Y%m%d%H%M%S")
+	ts = time.strftime("%Y%m%d%H%M%S", time.gmtime())
 	pi_temp = wx.pi_temp_read()
 	pi_dat_string = "%s\t%s" % (ts, pi_temp)
 	wx.write_out_dat_stamp(ts, 'pi_temp', pi_dat_string, wx_dir)
