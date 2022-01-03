@@ -33,7 +33,6 @@ if __name__ == "__main__":
 
 	if os.uname().nodename == 'keen':
 		i2c_addr = 0x76
-		press_cal = 6.0 # kPa
 
 	ts = datetime.datetime.fromtimestamp(time.time()).strftime("%Y%m%d%H%M%S")
 	pi_temp = wx.pi_temp_read()
