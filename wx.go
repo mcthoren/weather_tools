@@ -25,7 +25,7 @@ $WT_DIR/grab_48h /home/ghz/wx/data pi_temp
 cd /home/ghz/wx/plots || exit 1
 gnuplot "$WT_DIR/wx.gnuplot"
 
-# this prevents us from loosing 20m of data when the power drops.
+# this prevents us from losing 20m of data when the power drops.
 sync
 
 [[ "${HOST_N}" == "keen" ]] && {
