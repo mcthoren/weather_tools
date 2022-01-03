@@ -16,6 +16,4 @@ Notes:
 
 * apt install python3-smbus python3-bme680 #  <-- something like that will help one get off to a good start
 
-* The sensor data used to be pretty noisy, this combined with some of the things that happen to the linux file system on the raspberry pi necessitated the very strict pattern matching observed toward the top of wx.go.
-
 * The Air Quality readings are currently raw data from the bme680, the datasheet for which is linked above.
