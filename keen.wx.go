@@ -21,7 +21,7 @@ $WT_DIR/grab_48h /home/ghz/wx/data derived.dat
 $WT_DIR/grab_48h /home/ghz/wx/data pi_temp
 
 cd /home/ghz/wx/plots || exit 1
-gnuplot "$WT_DIR/keen.wx.gnuplot"
+gnuplot "$WT_DIR/wx.gnuplot"
 
 sync
 

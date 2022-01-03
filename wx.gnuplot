@@ -32,7 +32,7 @@ set y2label "Pi Temp (°C)"
 set output 'pitemp.png'
 plot TDPT using 1:(($2/1000)) title 'Pi Temp (°C)' with lines linecolor rgb "#00DD00" smooth bezier
 
-set title "Outdoor Temperature for the Last \\~48 Hours"
+set title "Temperature for the Last \\~48 Hours"
 set ylabel "Temp (°C)"
 set y2label "Temp (°C)"
 set output 'exttemp.png'
