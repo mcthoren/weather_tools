@@ -13,7 +13,7 @@ LOCK="/home/ghz/wx/wx.lock"
 touch "${LOCK}"
 
 HOST_N="$(hostname -s)"
-[[ "${HOST_N}" == "keen" ]] && WT_DIR='/import/home/ghz/repos/weather_tools/'
+[[ "${HOST_N}" == "keen" || "${HOST_N}" == "infinity" ]] && WT_DIR='/import/home/ghz/repos/weather_tools/'
 [[ "${HOST_N}" == "cutie" ]] && WT_DIR='/home/ghz/wx'
 
 $WT_DIR/sensor_data_grab.py
@@ -34,6 +34,11 @@ sync
 
 [[ "${HOST_N}" == "cutie" ]] && {
 	/usr/bin/rsync -e "ssh -q" --timeout=60 -ur $WT_DIR/* wx1_sync:/wx1/ 2>/dev/null
+}
+
+[[ "${HOST_N}" == "infinity" ]] && {
+	/usr/bin/rsync -ur --delete --timeout=50 --exclude='.git' /home/ghz/wx/ \
+	/import/home/ghz/repos/weather_tools/ wx_0x0b_sync:/wx_0x0b/ # 2> /dev/null
 }
 
 rm "${LOCK}"
