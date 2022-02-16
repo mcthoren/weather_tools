@@ -36,13 +36,13 @@ if __name__ == "__main__":
 
 	if node_n == 'keen':
 		i2c_addr = 0x76
-		title = "Indoor Weather from a room in Augsburg, Germany"
+		title = "Indoor Weather from a Room in Augsburg, Germany"
 
 	if node_n == 'cutie':
-		title = "Outdoor Weather from a balcony on the West side of an Apt in Augsburg, Germany"
+		title = "Outdoor Weather from a Balcony on the West Side of an Apt in Augsburg, Germany"
 
 	if node_n == 'infinity':
-		title = "Outdoor Weather from the north side of an Apt in Augsburg, Germany"
+		title = "Outdoor Weather from the North Side of an Apt in Augsburg, Germany"
 
 	ts = time.strftime("%Y%m%d%H%M%S", time.gmtime())
 	pi_temp = wx.pi_temp_read()
