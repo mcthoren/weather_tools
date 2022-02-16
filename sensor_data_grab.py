@@ -32,14 +32,16 @@ if __name__ == "__main__":
 	i2c_addr = 0x77
 	press_cal = 5.900 # kPa
 
-	if os.uname().nodename == 'keen':
+	node_n = os.uname().nodename
+
+	if node_n == 'keen':
 		i2c_addr = 0x76
 		title = "Indoor Weather from a room in Augsburg, Germany"
 
-	if os.uname().nodename == 'cutie':
+	if node_n == 'cutie':
 		title = "Outdoor Weather from a balcony on the West side of an Apt in Augsburg, Germany"
 
-	if os.uname().nodename == 'infinity':
+	if node_n == 'infinity':
 		title = "Outdoor Weather from the north side of an Apt in Augsburg, Germany"
 
 	ts = time.strftime("%Y%m%d%H%M%S", time.gmtime())
