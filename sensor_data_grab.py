@@ -8,7 +8,7 @@ import wxlib as wx
 
 wx_dir = "/home/ghz/wx"
 
-def gen_index(etemp, ehum, press, pitemp, edp, abs_hum, heat_i):
+def gen_index(etemp, ehum, press, pitemp, edp, abs_hum, heat_i, title):
 	plate = wx_dir+"/wx_index.html.template"
 	plate_fd = open(plate, 'r')
 	plate_dat = plate_fd.read()
@@ -24,6 +24,7 @@ def gen_index(etemp, ehum, press, pitemp, edp, abs_hum, heat_i):
 	plate_dat = plate_dat.replace("ABSHUM", str("%.2f" % abs_hum))
 	plate_dat = plate_dat.replace("HTIDX", str("%.2f" % heat_i))
 	plate_dat = plate_dat.replace("DATE", ts)
+	plate_dat = plate_dat.replace("TITLE", title)
 
 	wx.write_out(wx_dir+'/plots/wx.html', plate_dat, 'w')
 
@@ -33,6 +34,13 @@ if __name__ == "__main__":
 
 	if os.uname().nodename == 'keen':
 		i2c_addr = 0x76
+		title = "Indoor Weather from a room in Augsburg, Germany"
+
+	if os.uname().nodename == 'cutie':
+		title = "Outdoor Weather from a balcony on the West side of an Apt in Augsburg, Germany"
+
+	if os.uname().nodename == 'infinity':
+		title = "Outdoor Weather from the north side of an Apt in Augsburg, Germany"
 
 	ts = time.strftime("%Y%m%d%H%M%S", time.gmtime())
 	pi_temp = wx.pi_temp_read()
@@ -58,4 +66,4 @@ if __name__ == "__main__":
 	% (ts, abs_hum, heat_i, Tdew)
 	wx.write_out_dat_stamp(ts, 'derived.dat', derived_dat_string, wx_dir)
 
-	gen_index(e_temp, e_hum, press + press_cal, float(pi_temp) / 1000, Tdew, abs_hum, heat_i)
+	gen_index(e_temp, e_hum, press + press_cal, float(pi_temp) / 1000, Tdew, abs_hum, heat_i, title)
