@@ -39,7 +39,7 @@ sync
 
 [[ "${HOST_N}" == "infinity" ]] && {
 	/usr/bin/rsync -ur --delete --timeout=50 --exclude='.git' /home/ghz/wx/ \
-	/import/home/ghz/repos/weather_tools/ wx_0x0b_sync:/wx_0x0b/ # 2> /dev/null
+	/import/home/ghz/repos/weather_tools/ wx_0x0b_sync:/wx_0x0b/ 2> /dev/null
 }
 
 rm "${LOCK}"
