@@ -30,7 +30,6 @@ sync
 
 [[ "${HOST_N}" == "keen" ]] && {
 	/usr/bin/rsync -ur --timeout=50 /home/ghz/wx /import/home/ghz/repos/dust_wx wx0_sync:/wx0/ 2> /dev/null
-	/usr/bin/rsync --timeout=50 /import/home/ghz/box_temp/*.24h wx0_sync:/box_temps/
 }
 
 [[ "${HOST_N}" == "cutie" ]] && {
