@@ -54,7 +54,7 @@ set title "Wet Bulb Temp for the Last \\~48 Hours"
 set ylabel "Wet Bulb Temp (°C)"
 set y2label "Wet Bulb Temp (°C)"
 set output 'extwetbulb.png'
-plot TDDD using 1:17 title 'Dew Point (°C)' with lines linecolor rgb "#00aaff"
+plot TDDD using 1:17 title 'Wet Bulb Temp (°C)' with lines linecolor rgb "#00aaff"
 
 set title "Heat Index for the Last \\~48 Hours"
 set ylabel "Heat Index (°C)"
