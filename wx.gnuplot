@@ -38,16 +38,23 @@ set y2label "Temp (°C)"
 set output 'exttemp.png'
 plot TD using 1:3 title 'Temp (°C)' with lines linecolor rgb "#00DD00"
 
-set title "Temperature and Dew Point for the Last \\~48 Hours"
+set title "Temperature, Dew Point, and Wet Bulb Temperature for the Last \\~48 Hours"
 set output 'extdewtemp.png'
-plot TD using 1:3 title 'Temp (°C)' with lines linecolor rgb "#00DD00",\
-TDDD using 1:12 title 'Dew Point (°C)' with lines linecolor rgb "#00FFFF"
+plot TD using 1:3 title 'Temp (°C)' with lines linecolor rgb "#00DD00", \
+TDDD using 1:12 title 'Dew Point (°C)' with lines linecolor rgb "#00FFFF", \
+TDDD using 1:17 title 'Wet Bulb Temp (°C)' with lines linecolor rgb "#00aaFF"
 
 set title "Dew Point for the Last \\~48 Hours"
 set ylabel "Dew Point (°C)"
 set y2label "Dew Point (°C)"
 set output 'extdew.png'
 plot TDDD using 1:12 title 'Dew Point (°C)' with lines linecolor rgb "#00FFFF"
+
+set title "Wet Bulb Temp for the Last \\~48 Hours"
+set ylabel "Wet Bulb Temp (°C)"
+set y2label "Wet Bulb Temp (°C)"
+set output 'extwetbulb.png'
+plot TDDD using 1:17 title 'Dew Point (°C)' with lines linecolor rgb "#00aaff"
 
 set title "Heat Index for the Last \\~48 Hours"
 set ylabel "Heat Index (°C)"
