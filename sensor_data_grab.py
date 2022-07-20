@@ -59,13 +59,14 @@ if __name__ == "__main__":
 
 	abs_hum = wx.abs_hum_g_mmm(e_temp, e_hum)
 	Tdew = wx.dew_point_c(e_temp, e_hum)
+	Tw = wx.web_bulb_temp(e_temp, e_hum)
 	heat_i = wx.heat_index(e_temp, e_hum)
 	if (heat_i == -1):
 		heat_i = e_temp  # dirty hack cuz the model is pretty wonky outside a narrow range
 
 	derived_dat_string = \
-	"%s\tAbsolute Humidity: %.2f g/m³\tHeat Index: %.2f °C\tDew Point: %.2f °C\n" \
-	% (ts, abs_hum, heat_i, Tdew)
+	"%s\tAbsolute Humidity: %.2f g/m³\tHeat Index: %.2f °C\tDew Point: %.2f °C\tWet Bulb Temp: %.2f °C\n" \
+	% (ts, abs_hum, heat_i, Tdew, Tw)
 	wx.write_out_dat_stamp(ts, 'derived.dat', derived_dat_string, wx_dir)
 
 	gen_index(e_temp, e_hum, press + press_cal, float(pi_temp) / 1000, Tdew, abs_hum, heat_i, title)
