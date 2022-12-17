@@ -40,7 +40,7 @@ if __name__ == "__main__":
 		title = "Indoor Weather from a Room in Augsburg, Germany"
 
 	if node_n == 'cutie':
-		title = "Outdoor Weather from a Balcony on the West Side of an Apt in Augsburg, Germany"
+		title = "Outdoor Weather from a Balcony in Berlin"
 
 	if node_n == 'infinity':
 		title = "Outdoor Weather from the North Side of an Apt in Augsburg, Germany"
