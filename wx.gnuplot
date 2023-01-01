@@ -20,8 +20,9 @@ TD='/home/ghz/wx/data/bme680.dat.2-3_day'
 TDPT='/home/ghz/wx/data/pi_temp.2-3_day'
 TDDD='/home/ghz/wx/data/derived.dat.2-3_day'
 
-# calibration from https://www.dwd.de/DE/wetter/wetterundklima_vorort/bayern/augsburg/_node.html [kPa]
-plot TD using 1:(($9 + 5.900)) title 'Atmospheric Pressure (kPa)' with lines linecolor rgb "#A020F0"
+# calibration from:
+https://www.dwd.de/DE/wetter/wetterundklima_vorort/berlin-brandenburg/berlin_tempelhof/_node.html [kPa]
+plot TD using 1:(($9 + 0.7)) title 'Atmospheric Pressure (kPa)' with lines linecolor rgb "#A020F0"
 
 set format y "%.1f"
 set format y2 "%.1f"

@@ -31,7 +31,7 @@ def gen_index(etemp, ehum, press, pitemp, edp, abs_hum, heat_i, Tw, title):
 
 if __name__ == "__main__":
 	i2c_addr = 0x77
-	press_cal = 5.900 # kPa
+	press_cal = 0.7 # kPa
 
 	node_n = os.uname().nodename
 
