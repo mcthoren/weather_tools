@@ -21,7 +21,7 @@ TDPT='/home/ghz/wx/data/pi_temp.2-3_day'
 TDDD='/home/ghz/wx/data/derived.dat.2-3_day'
 
 # calibration from:
-https://www.dwd.de/DE/wetter/wetterundklima_vorort/berlin-brandenburg/berlin_tempelhof/_node.html [kPa]
+# https://www.dwd.de/DE/wetter/wetterundklima_vorort/berlin-brandenburg/berlin_tempelhof/_node.html [kPa]
 plot TD using 1:(($9 + 0.7)) title 'Atmospheric Pressure (kPa)' with lines linecolor rgb "#A020F0"
 
 set format y "%.1f"
