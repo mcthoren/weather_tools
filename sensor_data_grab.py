@@ -37,10 +37,10 @@ if __name__ == "__main__":
 
 	if node_n == 'keen':
 		i2c_addr = 0x76
-		title = "Indoor Weather from a Room in Augsburg, Germany"
+		title = "Indoor Weather from my Apartment in Berlin"
 
 	if node_n == 'cutie':
-		title = "Outdoor Weather from a Balcony in Berlin"
+		title = "Outdoor Weather from my Balcony in Berlin"
 
 	if node_n == 'infinity':
 		title = "Outdoor Weather from the North Side of an Apt in Augsburg, Germany"
