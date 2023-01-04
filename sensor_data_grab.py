@@ -43,7 +43,7 @@ if __name__ == "__main__":
 		title = "Outdoor Weather from my Balcony in Berlin"
 
 	if node_n == 'infinity':
-		title = "Outdoor Weather from the North Side of an Apt in Augsburg, Germany"
+		title = "Outdoor Weather from the west side of my Apt in Berlin"
 
 	ts = time.strftime("%Y%m%d%H%M%S", time.gmtime())
 	pi_temp = wx.pi_temp_read()
