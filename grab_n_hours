@@ -93,6 +93,5 @@ close(OUT_t);
 if (-e $out_dat_f_t && -s $out_dat_f_t >= 1000 * $n_hours) {
 	rename $out_dat_f_t, $out_dat_f; 
 } elsif (-e $out_dat_f_t) {
-	# unlink $out_dat_f_t or printf "could not delete $out_dat_f_t\n";
-	printf "tried to delete $out_dat_f_t\n";
+	unlink $out_dat_f_t or printf "could not delete $out_dat_f_t\n";
 }
