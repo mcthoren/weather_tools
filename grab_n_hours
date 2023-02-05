@@ -1,0 +1,98 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use POSIX qw(strftime ceil);
+use utf8;
+use open qw(:std :utf8);
+use Encode qw(encode decode);
+use Getopt::Std;
+
+@ARGV = map { decode("UTF-8", $_) } @ARGV;
+
+sub usage() {
+	print STDERR "usage: $0 -n num -d dir -f string\n";
+	print STDERR "\tn: number of hours to collect from the data files\n";
+	print STDERR "\td: data directory to look for data files in\n";
+	print STDERR "\tf: file template data files are patterned after\n";
+}
+
+my %args;
+getopt("ndf", \%args);
+
+unless (defined ($args{n}) && ($args{n} =~ /^\d+$/) && $args{n} >= 0 ){
+	usage;
+	die "invalid number of hours";
+}
+
+unless (defined ($args{d}) && -d "$args{d}"){
+	usage;
+	die "omg! data dir doesn't exist!";
+}
+
+unless (defined ($args{f}) && "$args{f}"){
+	usage;
+	die "filename template should be a non zero length string";
+}
+
+my $p_flag = 0;
+my $date = time;
+my $data_d = "$args{d}";
+my $f_tplate = "$args{f}";
+my $n_hours = "$args{n}";
+
+my $out_dat_f = "$data_d/$f_tplate.$n_hours"."_hours";
+my $out_dat_f_t = "$out_dat_f.tmp";
+
+if (-e $out_dat_f) {
+	unlink $out_dat_f or printf "could not delete $out_dat_f\n";
+}
+
+if (-e $out_dat_f_t) {
+	unlink $out_dat_f_t or printf "could not delete $out_dat_f_t\n";
+}
+
+open(OUT, ">>", $out_dat_f) or die "omg! can't open output file: $out_dat_f";
+open(OUT_t, ">>", $out_dat_f_t) or die "omg! can't open output file: $out_dat_f_t";
+
+my $date_pat = strftime "%Y%m%d%H", localtime($date - ($n_hours * 3600));
+my $date_pat_iso = strftime "%FT%H:", localtime($date - ($n_hours * 3600));
+
+my $calcd_days = ceil($n_hours / 24);
+for (my $nday = $calcd_days; $nday >= 0; $nday--) {
+	my $date_it = $date - ($nday * 86400);
+
+	my $datey = strftime "%Y", localtime($date_it);
+	my $tdatey = strftime "%Y%m%d", localtime($date_it);
+	my $tdatey_iso = strftime "%F", localtime($date_it);
+
+	my $in_dat_f = "$data_d/$datey/$f_tplate.$tdatey";
+	my $in_dat_f_iso = "$data_d/$datey/$f_tplate.$tdatey_iso";
+
+	if (-e $in_dat_f or -e $in_dat_f_iso) {
+		if (-e $in_dat_f) {
+			open(IN, "<", $in_dat_f) or die "omg! can't open input file: $in_dat_f";
+		} elsif (-e $in_dat_f_iso) {
+			open(IN, "<", $in_dat_f_iso) or die "omg! can't open input file: $in_dat_f_iso";
+		} else {
+			die "omg! couldn't find any input files!";
+		}
+
+		while (<IN>) {
+			$p_flag = 1 if(/^$date_pat/);
+			$p_flag = 1 if(/^$date_pat_iso/);
+			print OUT;
+			print OUT_t if($p_flag);
+		}
+		close(IN);
+	}
+}
+close(OUT);
+close(OUT_t);
+
+if (-e $out_dat_f_t && -s $out_dat_f_t >= 1000 * $n_hours) {
+	rename $out_dat_f_t, $out_dat_f; 
+} elsif (-e $out_dat_f_t) {
+	# unlink $out_dat_f_t or printf "could not delete $out_dat_f_t\n";
+	printf "tried to delete $out_dat_f_t\n";
+}
