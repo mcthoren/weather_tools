@@ -1,5 +1,6 @@
 set xtics 7200 rotate by 30 offset -5.7, -2.2
 set y2tics 
+set link y2
 set mytics
 set key outside below
 set xlabel "Time (UTC)" offset 0.0, -1.6;
