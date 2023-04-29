@@ -1,4 +1,4 @@
-set xtics 7200 rotate by 30 offset -5.7, -2.2
+set xtics 7200 rotate by 30 offset -6.4, -2.2
 set y2tics 
 set link y2
 set mytics
